@@ -1,19 +1,32 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-
+import LoadingBar from 'react-top-loading-bar'
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsCart } from "react-icons/bs";
 import { FaUser, FaSearch } from "react-icons/fa";
-import { VscChromeClose } from 'react-icons/vsc';
-import { BiMenuAltRight } from 'react-icons/bi';
+import { VscChromeClose } from "react-icons/vsc";
+import { BiMenuAltRight } from "react-icons/bi";
 
 import Menu from "./Menu";
 import MobileMenu from "./MobileMenu";
+import { useCart } from "@/context/Cart";
+import axios from "axios";
+import SearchPage from "./SearchPage ";
+import { useTopLoadingBar } from "@/context/TopLoadingBar";
+import { useRouter } from "next/router";
+const API = process.env.NEXT_PUBLIC_APP_API_URL;
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Header = () => {
+  const [loading,setTopLoading]=useTopLoadingBar();
+  const router=useRouter()
+  const [cart, setCart] = useCart();
 
+  const [showSearch, setShowSearch] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
+  const [categories, setCategories] = useState([]); //for all categories
 
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -21,7 +34,7 @@ const Header = () => {
   const controlNavbar = () => {
     if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY) {
-        setShow("-translate-y-[80px]");
+        setShow("-translate-y-[90px]");
       } else {
         setShow("shadow-sm");
       }
@@ -32,75 +45,129 @@ const Header = () => {
   };
 
   useEffect(() => {
+    
     window.addEventListener("scroll", controlNavbar);
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
   }, [lastScrollY]);
 
+  // backdrop-filter backdrop-blur-lg bg-opacity-5
+  //GET ALL CATEGORY FOR HOME PAGE
+  const getAllCategory = async () => {
+    try {
+      const { data } = await axios.get(`/api/getcategory`);
+      if (data?.success) {
+        setCategories(data?.category);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllCategory();
+  }, []);
+  
+  // FOR TOP LOADING BAR
+  useEffect(() => {
+    router.events.on("routeChangeStart",()=>{
+      setTopLoading(40)
+    })
+    router.events.on("routeChangeComplete",()=>{
+      setTopLoading(100)
+    })
+    
+  }, [])
   return (
-    <header
-      className={`w-full h-[50px] md:h-[80px] px-4 bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 drop-shadow-sm ${show}`}
-    >
-      <div className="h-[50px] flex justify-between items-center">
-        <Link href="/">
-          <img
-            src="/logo.jpeg"
-            alt="logo"
-            className="w-[130px] md:w-[200px] lg:w-[235px]"
-          />
-        </Link>
-      </div>
+    <>
+      <LoadingBar
+          color='rgb(200 132 162)'
+          waitingTime={400}
+          progress={loading}
+        />
+        <ToastContainer  
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"/>
+      <header
+        // backdrop-filter backdrop-blur-lg bg-opacity-30
+        className={`w-full h-[80px] md:h-[100px] px-10 bg-white flex items-center justify-between z-20 fixed  top-0 transition-transform duration-300 drop-shadow-sm ${show}`}
+      >
+        <div className="h-[80%]">
+          <Link href="/">
+            <img src="/kesha-logo.png" alt="logo" className="h-[100%]" />
+          </Link>
+        </div>
 
-      <Menu
-        showCatMenu={showCatMenu}
-        setShowCatMenu={setShowCatMenu}
-      />
-
-      {
-        mobileMenu &&
-        <MobileMenu
+        <Menu
           showCatMenu={showCatMenu}
           setShowCatMenu={setShowCatMenu}
-          setMobileMenu={setMobileMenu}
+          categories={categories}
         />
-      }
 
-      <div className=" text-black flex items-center justify-center">
-        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
-          <FaSearch />
+        {mobileMenu && (
+          <MobileMenu
+            showCatMenu={showCatMenu}
+            setShowCatMenu={setShowCatMenu}
+            setMobileMenu={setMobileMenu}
+            categories={categories}
+          />
+        )}
+
+        <div className="text-black flex items-center justify-center">
+          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] hover:bg-blacl/[0.05] cursor-pointer relative">
+            <FaSearch onClick={() => setShowSearch(true)} />
+          </div>
+          <Link href="/cart">
+            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
+              <IoMdHeartEmpty className="text-[15px] md:text-[20px]" />
+              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                0
+              </div>
+            </div>
+          </Link>
+
+          <Link href="/cart">
+            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
+              <BsCart className="text-[15px] md:text-[20px]" />
+              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                {cart?.length}
+              </div>
+            </div>
+          </Link>
+
+          <Link href={`/userprofile`}>
+            <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
+              <FaUser />
+            </div>
+          </Link>
+
+          {/* mobileMenu */}
+          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] corsor-pointer relative -mr-2 md:hidden">
+            {mobileMenu ? (
+              <VscChromeClose
+                className="text-[16px]"
+                onClick={() => setMobileMenu(false)}
+              />
+            ) : (
+              <BiMenuAltRight
+                className="text-[20px]"
+                onClick={() => setMobileMenu(true)}
+              />
+            )}
+          </div>
         </div>
-        <Link href="/cart">
-          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
-            <IoMdHeartEmpty className="text-[15px] md:text-[20px]" />
-            <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">5</div>
-          </div>
-        </Link>
-
-        <Link href="/cart">
-          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative" >
-            <BsCart className="text-[15px] md:text-[20px]" />
-            <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">5</div>
-          </div>
-        </Link>
-
-        <Link href={`/profile`}>
-          <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
-            <FaUser />
-          </div>
-        </Link>
-
-        {/* mobileMenu */}
-        <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] corsor-pointer relative -mr-2 md:hidden">
-          {mobileMenu ? (
-            <VscChromeClose className="text-[16px]" onClick={() => setMobileMenu(false)} />
-          ) : (
-            <BiMenuAltRight className="text-[20px]" onClick={() => setMobileMenu(true)} />
-          )}
-        </div>
-
-      </div>
-    </header >
+      </header>
+      {showSearch && <SearchPage setShowSearch={setShowSearch} />}
+    </>
   );
 };
 

@@ -1,10 +1,15 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
+import { AuthProvider } from "@/context/Auth";
+import { CartProvider } from "@/context/Cart";
+import { TotalPaymentProvider } from "@/context/TotalPayment";
+import { TopLoadingBarProvider } from "@/context/TopLoadingBar";
 export default function App({ Component, pageProps }) {
+ 
   return (
     <>
       <Head>
@@ -23,9 +28,18 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
+      <AuthProvider>
+      <CartProvider>
+      <TotalPaymentProvider>
+      <ToastContainer />
+      <TopLoadingBarProvider>
       <Header />
       <Component {...pageProps} />
       <Footer />
+      </TopLoadingBarProvider>
+      </TotalPaymentProvider>
+      </CartProvider>
+      </AuthProvider>
     </>
   );
 }

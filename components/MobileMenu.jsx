@@ -7,6 +7,7 @@ const data = [
     { id: 2, name: "About", url: "/about" },
     { id: 3, name: "Categories", subMenu: true },
     { id: 4, name: "Contact", url: "/contact" },
+    { id: 5, name: "CustomProduct", url: "/customproduct" }
 ];
 
 const subMenuData = [
@@ -19,10 +20,10 @@ const subMenuData = [
 const MobileMenu = ({
     showCatMenu,
     setShowCatMenu,
-    setMobileMenu
+    setMobileMenu,categories
 }) => {
     return (
-        <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black z-50">
+        <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black z-999">
             {data.map((item) => {
                 return (
                     <React.Fragment key={item.id}>
@@ -38,11 +39,11 @@ const MobileMenu = ({
 
                                 {showCatMenu && (
                                     <ul className="bg-black/[0.05] -mx-5 mt-4 -mb-4">
-                                        {subMenuData?.map((subelm) => {
+                                        {categories?.map((subelm) => {
                                             return (
                                                 <Link
-                                                    href=''
-                                                    key={subelm.id}
+                                                    href={`/category/${subelm.slug}`}
+                                                    key={subelm._id}
                                                     onClick={() => {
                                                         setShowCatMenu(false);
                                                         setMobileMenu(false);
@@ -51,7 +52,7 @@ const MobileMenu = ({
                                                     <li className="py-4 px-8 border-t flex justify-between">
                                                         {subelm.name}
                                                         <span className="opacity-50 text-sm">
-                                                            {`(${subelm.doc_count})`}
+                                                            {`(6)`}
                                                         </span>
                                                     </li>
                                                 </Link>

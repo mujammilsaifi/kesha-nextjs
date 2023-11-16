@@ -88,7 +88,7 @@ const Custom404 = () => {
 
 
     return (
-        <section className='mt-5 md:mt-10'>
+        <section className='mt-5 md:mt-[100px]'>
             <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
                 <Image
                     src="/empty-cart.jpg"
