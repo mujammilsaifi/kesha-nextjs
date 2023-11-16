@@ -1166,9 +1166,9 @@ const handleCreateSlide = async () => {
               <td className=" px-2 py-2 border border-gray-300 whitespace-wrap">
                 <div className="w-[100px] text-sm text-gray-900">
                 {product?.images?.map((photo, index) => (
-                    <img
+                    <img key={index}
                     src={`${photo.url}`}
-                    alt={`Product Photo ${index}`}
+                    alt={`Product  ${index}`}
                     className='w-[100%]'
                   />
                   ))}
