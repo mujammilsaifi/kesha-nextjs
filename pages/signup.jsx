@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
 
-function signup() {
+function Signup() {
     const[loading,setTopLoading] =useTopLoadingBar();
     const router = useRouter();
     const [cart] = useCart();
@@ -293,4 +293,4 @@ function signup() {
   );
 }
 
-export default signup;
+export default Signup;

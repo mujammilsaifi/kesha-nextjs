@@ -1,12 +1,8 @@
 import Admin from "@/components/Admin";
-
 import { useAuth } from "@/context/Auth";
-
 import Link from "next/link";
 
-
-
-const admindashboard = () => {
+const Admindashboard = () => {
   
   const [auth]=useAuth();  
  
@@ -16,4 +12,4 @@ const admindashboard = () => {
   </>;
 };
 
-export default admindashboard;
+export default Admindashboard;

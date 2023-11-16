@@ -1676,7 +1676,7 @@ const handleCreateSlide = async () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-            <tr key={orderDetail?._id}>
+            <tr>
               <td className="w-[100px] px-2 py-2 border border-gray-300 whitespace-wrap">
                 <div className=" text-sm font-medium text-gray-900">{orderDetail?.firstname} {orderDetail?.lastname}
                 <button className="bg-yellow-300 hover:bg-yellow-500 text-white font-bold py-2 mt-4 px-2 rounded" onClick={orderShip}>Push to Shiprocket </button>

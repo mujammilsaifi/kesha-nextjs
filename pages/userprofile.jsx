@@ -5,7 +5,7 @@ import axios from 'axios';
 import Link from "next/link";
 import { toast } from 'react-toastify';
 const API=process.env.NEXT_PUBLIC_APP_API_URL
-const userprofile = () => {
+const Userprofile = () => {
     const [auth,setAuth]=useAuth();
     const _id=auth?.user?._id;
     const router = useRouter();
@@ -104,4 +104,4 @@ const userprofile = () => {
   )
 }
 
-export default userprofile
+export default Userprofile

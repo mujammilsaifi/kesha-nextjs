@@ -25,7 +25,7 @@ const Cart = () => {
  useEffect(() => {
  setTotalPayment(subTotal)
  localStorage.setItem("totalPayment", JSON.stringify(subTotal));
- }, [subTotal])
+ }, [subTotal,setTotalPayment])
   const applyCoupon =async () => {
     const coupontitle=couponCode;
     const {data}=await axios.get(`/api/singlecoupon/${coupontitle}`)
@@ -88,7 +88,7 @@ const Cart = () => {
               <div className="flex-[2]">
                 <div className="text-lg font-bold">Cart Items</div>
                 {cart.map((product,i)=>(
-                  <CartItem  product={product} totalPrice={totalPrice}/>
+                  <CartItem key={i} product={product} totalPrice={totalPrice}/>
                 ))}
                   
               </div>
@@ -185,6 +185,7 @@ const Cart = () => {
               width={300}
               height={300}
               className="w-[300px] md:w-[400px]"
+              alt="cart"
             />
             <span className="text-xl font-bold">Your cart is empty</span>
             <span className="text-center mt-4">

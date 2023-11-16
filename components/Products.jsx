@@ -35,7 +35,7 @@ const Products = ({category}) => {
     <section className='flex items-cnter justify-center'>
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 px-2 overflow-hidden md:px-8">
           {products?.map((product,index)=>(
-             <Link
+             <Link key={index}
              href={`/product/${product?.slug}`}
              className="transform overflow-hidden bg-white duration-200 rounded-md hover:scale-105 cursor-pointer p-2"
          >

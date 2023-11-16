@@ -11,7 +11,7 @@ import Wrapper from "@/components/wrapper";
 const merchantId = "PGTESTPAYUAT";
 const saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
 const saltIndex = 1;
-const checkout = () => {
+const Checkout = () => {
   useEffect(() => {
     if (cart?.length <= 0) {
       router.push("/");
@@ -149,7 +149,7 @@ const checkout = () => {
       ...formData,
       userId: _id,
     });
-  }, []);
+  }, [_id]);
   // Function to handle the radio button selection
   const handleGatewaySelection = (event) => {
     setSelectedGateway(event.target.value);
@@ -420,4 +420,4 @@ const checkout = () => {
   );
 };
 
-export default checkout;
+export default Checkout;

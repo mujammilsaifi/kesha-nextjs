@@ -39,7 +39,7 @@ export async function getServerSideProps({ req,query }) {
 }
 
 
-const product = ({ product }) => {
+const Product = ({ product }) => {
   const responsive = {
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
@@ -121,8 +121,8 @@ useEffect(() => {
                 className="productCarousel"
             >
               
-            {product?.images?.map((img)=>(
-              <img src={img?.url} alt="" /> 
+            {product?.images?.map((img,i)=>(
+              <img key={i} src={img?.url} alt="crousel" /> 
             ))}
                 
             </Carousel>
@@ -171,7 +171,7 @@ useEffect(() => {
 
               {/* SIZE START */}
               <div>
-                <select id="size" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-2.5  dark:bg-black dark:border-black dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={handleSizeOfProduct}>
+                <select id="size" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-2.5  dark:bg-black dark:border-black dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={handleSizeOfProduct}>
                   <option selected >Select Size</option>
                   {
                     size.map((size, i) => {
@@ -228,7 +228,7 @@ useEffect(() => {
             DetailsSection.map((item, i) => {
               return (
                 <>
-                  <span className='text-black text-[18px] font-oswald font-bold hover:underline cursor-pointer' onClick={() => handleShow(i)}>{item.name}</span>
+                  <span key={i} className='text-black text-[18px] font-oswald font-bold hover:underline cursor-pointer' onClick={() => handleShow(i)}>{item.name}</span>
                   <hr className='w-full h-[2px] mx-auto mt-5 bg-gray-100 border-0 rounded md:mt-5 dark:bg-gray-700 md:hidden' />
                 </>
               )
@@ -415,12 +415,12 @@ useEffect(() => {
             <div className="text-2xl font-bold mb-5">You Might Also Like</div>
             <Carousels
                 responsive={responsive}
-                containerClass="-mx-[10px]"
-                itemClass="px-[10px]"
+                containerclassName="-mx-[10px]"
+                itemclassName="px-[10px]"
             >
                
                { products?.map((product, index) => (
-                    <Link
+                    <Link key={index}
                     href={`/product/${product?.slug}`}
                     className="transform overflow-hidden bg-white duration-200 rounded-md hover:scale-105 cursor-pointer p-4"
                 >
@@ -461,4 +461,4 @@ useEffect(() => {
   )
 }
 
-export default product;
+export default Product;

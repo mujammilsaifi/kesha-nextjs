@@ -6,7 +6,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
-const paymentSuccess = () => {
+const PaymentSuccess = () => {
     const [categories, setCategories] = useState([]); //for all products
     const getCategory = async () => {
         try {
@@ -72,8 +72,8 @@ const paymentSuccess = () => {
                                 categories?.map((elm, i) => {
                                    
                                     return (
-                                        <Link href={`/category/${elm.slug}`}  >
-                                            <section key={i} className='relative transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer '>
+                                        <Link key={i} href={`/category/${elm.slug}`}  >
+                                            <section  className='relative transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer '>
                                                 <img src={`${elm.url}`} alt="img" className='h-[180px] w-[100%] md:h-[320px] md:w-[360px]'/>
                                                 <div className='absolute top-[70%] md:top-[75%] left-2 md:left-5 text-[12px] md:text-[18px] text-white drop-shadow-lg' >
                                                     <p className='p-1 md:p-2 text-black text-shadow-lg bg-white rounded-lg duration-200'>{elm.name}</p>
@@ -92,4 +92,4 @@ const paymentSuccess = () => {
 };
 
 
-export default paymentSuccess
+export default PaymentSuccess

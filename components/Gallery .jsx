@@ -29,16 +29,16 @@ const Gallery = () => {
                 <h1 className='text-[28px] text-black font-oswald font-bold md:text-[32px]' >Product Gallery</h1>
             </section>
             <section>
-                <div class="container mx-auto px-5 py-2 lg:px-32">
-                    <div class="-m-1 flex flex-wrap md:-m-2">
+                <div className="container mx-auto px-5 py-2 lg:px-32">
+                    <div className="-m-1 flex flex-wrap md:-m-2">
                         {
                             gallery.map(({ img }, i) => {
                                 return (
-                                    <div class="flex w-1/3 flex-wrap" key={i}>
-                                        <div class="w-full p-1 md:p-2">
+                                    <div className="flex w-1/3 flex-wrap" key={i}>
+                                        <div className="w-full p-1 md:p-2">
                                             <img
                                                 alt="gallery"
-                                                class="block h-full w-full rounded-lg object-cover object-center"
+                                                className="block h-full w-full rounded-lg object-cover object-center"
                                                 src={img} />
                                         </div>
                                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-const termsofservice = () => {
+const Termsofservice = () => {
     const [agree, setAgree] = useState(false);
 
     const handleAgree = () => {
@@ -63,4 +63,4 @@ const termsofservice = () => {
 
 
 
-export default termsofservice
+export default Termsofservice

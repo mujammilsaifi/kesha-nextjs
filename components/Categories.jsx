@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from 'axios';
+import { toast } from 'react-toastify';
 const API=process.env.NEXT_PUBLIC_APP_API_URL
 
 const Categories = () => {
@@ -34,8 +35,8 @@ const Categories = () => {
                 setCategories(data?.category);
             }
         } catch (error) {
-        console.log(error);
-        alert(error); 
+       
+        toast.error(error); 
         }
     } 
 
@@ -48,8 +49,8 @@ const Categories = () => {
                 {/* <div className="text-2xl font-bold mb-5">You Might Also Like</div> */}
                 <Carousel
                     responsive={responsive}
-                    containerClass="-mx-[10px]"
-                    itemClass="px-[5px] md:px-[10px]"
+                    containerclassName="-mx-[10px]"
+                    itemclassName="px-[5px] md:px-[10px]"
                     autoPlay
                     autoPlaySpeed={2000}
                     infinite
@@ -59,7 +60,7 @@ const Categories = () => {
                         categories.map((cat, i) => {
                             
                             return (
-                                <Link href={`/category/${cat.slug}`}  >
+                                <Link key={i} href={`/category/${cat.slug}`}  >
                                     <section key={i} className='relative transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer '>
                                         <img src={`${cat.url}`} alt={cat.name} className='h-[180px] w-[100%] md:h-[320px] md:w-[360px]' />
                                         <div className='absolute top-[75%] md:top-[82%] left-2 md:left-5 text-[12px] md:text-[18px] text-white drop-shadow-lg' >

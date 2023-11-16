@@ -129,7 +129,7 @@ const FilterProducts = () => {
             <section className='flex items-cnter justify-center'>
                 <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-2 overflow-hidden md:px-8">
                     {
-                        filteredData?.map((elm) => <ProductCard {...elm} />)
+                        filteredData?.map((elm,i) => <ProductCard key={i} {...elm} />)
                     }
                     
                 </section>

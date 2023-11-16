@@ -6,7 +6,7 @@ const API = process.env.NEXT_PUBLIC_APP_API_URL;
 import axios from "axios";
 import { useTopLoadingBar } from "@/context/TopLoadingBar";
 import { toast } from 'react-toastify';
-const contact = () => {
+const Contact = () => {
   const[loading,setTopLoading] =useTopLoadingBar();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -168,20 +168,6 @@ const contact = () => {
   );
 };
 
-export default contact;
-const ContactTextArea = ({ row, placeholder, name, defaultValue }) => {
-  return (
-    <>
-      <div className="mb-6">
-        <textarea
-          rows={row}
-          placeholder={placeholder}
-          name={name}
-          className="border-[f0f0f0] w-full resize-none rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"
-          defaultValue={defaultValue}
-        />
-      </div>
-    </>
-  );
-};
+export default Contact;
+
 

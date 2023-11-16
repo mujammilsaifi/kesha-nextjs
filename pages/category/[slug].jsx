@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import Wrapper from '@/components/wrapper';
 import ProductCard from '@/components/ProductCart';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
 export async function getServerSideProps({ req,query }) {
@@ -28,11 +28,9 @@ export async function getServerSideProps({ req,query }) {
     },
   };
 }
-const category = ({catProducts}) => {
+const Category = ({catProducts}) => {
   const router = useRouter();
   const { slug } = router.query;
-
-  
 
   return (
     <section className='mt-[120px]'>
@@ -45,8 +43,8 @@ const category = ({catProducts}) => {
 
         {/* products grid start */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-14 px-0 md:px-0">
-        {catProducts?.map((product) => (
-          <ProductCard {...product} />
+        {catProducts?.map((product, i) => (
+          <ProductCard key={i} {...product} />
           ))}
          
         </div>
@@ -55,4 +53,4 @@ const category = ({catProducts}) => {
   )
 }
 
-export default category;
+export default Category;

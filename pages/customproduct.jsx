@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
 import axios from "axios";
 import { toast } from 'react-toastify';
-const customproduct = () => {
+const Customproduct = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -36,7 +36,7 @@ const customproduct = () => {
   }
   
   return (
-    // style={{backgroundImage: "url('/costomize-bg.avif')"}}
+    
     <section className='w-full mt-[120px] bg-cover bg-center bg-no-repeat'>
       <section className='heading flex flex-col items-center justify-center'>
         <h1 className='mb-4 text-4xl font-oswald leading-none tracking-tight text-black md:text-5xl lg:text-6xl dark:text-black text-center'>Create your own unique style of jewellery</h1>
@@ -84,4 +84,4 @@ const customproduct = () => {
   )
 }
 
-export default customproduct;
+export default Customproduct;

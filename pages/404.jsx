@@ -95,6 +95,7 @@ const Custom404 = () => {
                     width={300}
                     height={300}
                     className="w-[220px] md:w-[300px]"
+                    alt='category'
                 />
                 <span className="text-xl font-bold">Page Not Found</span>
                 <span className="text-center mt-4 p-5">
@@ -106,8 +107,8 @@ const Custom404 = () => {
                     <div className="mt-[10px] md:mt-[10px] mb-[10px] md:mb-0">
                         <Carousel
                             responsive={responsive}
-                            containerClass="-mx-[10px]"
-                            itemClass="px-[5px] md:px-[10px]"
+                            containerclassName="-mx-[10px]"
+                            itemclassName="px-[5px] md:px-[10px]"
                             autoPlay
                             autoPlaySpeed={2000}
                             infinite
@@ -118,9 +119,9 @@ const Custom404 = () => {
                                     const { img, text, btn, url } = elm;
 
                                     return (
-                                        <Link href={`/category/${elm.text}`}  >
-                                            <section key={i} className='relative transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer '>
-                                                <img src={img} alt="img" />
+                                        <Link href={`/category/${elm.text}`} key={`hi-${i}`} >
+                                            <section  className='relative transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer '>
+                                                <Image width={500} height={500} src={img} alt='category' />
                                                 <div className='absolute top-[70%] md:top-[75%] left-2 md:left-5 text-[12px] md:text-[18px] text-white drop-shadow-lg' >
                                                     <p className='p-1 md:p-2 text-black text-shadow-lg bg-white rounded-lg duration-200'>{text}</p>
                                                 </div>

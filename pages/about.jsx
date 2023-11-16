@@ -46,7 +46,7 @@ const about = () => {
             <Wrapper>
                 <section className="p-5 flex-col md:flex lg:flex-row items-start justify-center gap-10 md:mt-[10px] lg:mt-[100px] mt-[20px]">
                     <section className="img rounded-md">
-                        <Image src={`/category/1.png`} width={4000} height={4000} className="rounded-md"/>
+                        <Image src={`/category/1.png`} width={4000} height={4000} alt="about" className="rounded-md"/>
                     </section>
                     <section className="info mt-5 md:mt-0">
                         <h1 className="flex items-center mb-8 left-5 text-5xl font-oswald font-medium dark:text-black ">

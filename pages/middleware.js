@@ -2,7 +2,7 @@ import React ,{ useEffect, useState } from 'react';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-export function middleware() {
+export function Middleware() {
   const [ok, setOk] = useState(false);
   const [token, setToken] = useState('');
 

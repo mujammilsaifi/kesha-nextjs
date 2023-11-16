@@ -26,12 +26,12 @@ const RelatedProducts = ({products}) => {
             <div className="text-2xl font-bold mb-5">You Might Also Like</div>
             <Carousel
                 responsive={responsive}
-                containerClass="mx-[10px]"
-                itemClass="px-[10px]"
+                containerclassName="mx-[10px]"
+                itemclassName="px-[10px]"
             >
                
                { products?.map((product, index) => (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-14 px-0 md:px-0">
+                <div key={index} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-14 px-0 md:px-0">
                     <ProductCard {...product} />
                     </div>
                 ))}
