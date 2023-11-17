@@ -7,9 +7,8 @@ import axios from "axios";
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
 export async function getServerSideProps({ req,query }) {
   const { slug } = query;
-  
   try {
-    const { data } = await axios.get(`${API}/api/category/${slug}`);
+    const { data } = await axios.get(`/api/category/${slug}`);
     if (data?.success) {
       return {
         props: {
