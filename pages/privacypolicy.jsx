@@ -1,6 +1,6 @@
 import React from 'react'
 
-const privacypolicy = () => {
+const Privacypolicy = () => {
     return (
         <section className='my-[10vh] w-full bg-gray-100 p-4 min-h-[60vh] flex flex-col justify-center items-center '>
             <div className="w-full p-8 bg-white rounded-md">
@@ -103,7 +103,7 @@ const privacypolicy = () => {
                 {/* Add more content for the Privacy Policy page here */}
             </div>
         </section >
-    )
-}
+    );
+};
 
-export default privacypolicy;
+export default Privacypolicy;

@@ -81,7 +81,7 @@ const Customproduct = () => {
         
       </section>
     </section>
-  )
-}
+  );
+};
 
 export default Customproduct;

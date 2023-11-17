@@ -1,6 +1,6 @@
 import React from 'react'
 
-const returnpolicy = () => {
+const Returnpolicy = () => {
   return (
     <div className="bg-white p-6 m-4 rounded-md mt-[100px]">
         <h1 className="text-3xl font-bold font-oswald">Return & cancellation Policy</h1>
@@ -66,7 +66,7 @@ const returnpolicy = () => {
 
     
 </div>
-  )
-}
+  );
+};
 
-export default returnpolicy
+export default Returnpolicy
