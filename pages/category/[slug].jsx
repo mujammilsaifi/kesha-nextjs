@@ -5,10 +5,12 @@ import ProductCard from '@/components/ProductCart';
 import React from "react";
 import axios from "axios";
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
-export async function getServerSideProps({ req,query }) {
+export async function getServerSideProps({ query }) {
+  // const router=useRouter()
   const { slug } = query;
+  console.log(slug)
   try {
-    const { data } = await axios.get(`/api/category/${slug}`);
+    const { data } = await axios.get(`${API}/api/category/${slug}`);
     if (data?.success) {
       return {
         props: {

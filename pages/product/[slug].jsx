@@ -14,7 +14,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useCart } from '@/context/Cart';
 import { toast } from 'react-toastify';
-export async function getServerSideProps({ req,query }) {
+export async function getServerSideProps({ query }) {
   const { slug } = query;
   
   try {
