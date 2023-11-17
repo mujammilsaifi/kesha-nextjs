@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const Products = ({category}) => {
   const name=category?.name;
@@ -12,14 +13,12 @@ const Products = ({category}) => {
   //GET ALL PRODUCTS FOR ADMIN
   const getAllProduct = async () => {
     try {
-      const { data } = await axios.get(`${API}/api/category/${slug}`);
+      const { data } = await axios.get(`/api/category/${slug}`);
       if (data?.success) {
-        setAllProducs(data?.products);
-        
+        setAllProducs(data?.products);  
       }
     } catch (error) {
-      console.log(error);
-      alert(error);
+      toast.error(error);
     }
   };
   useEffect(() => {
