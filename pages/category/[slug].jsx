@@ -21,7 +21,7 @@ export async function getServerSideProps({ query }) {
         },
     };
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   // Return an empty product if there's an error or the data doesn't exist

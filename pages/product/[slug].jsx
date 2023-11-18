@@ -22,14 +22,13 @@ export async function getServerSideProps({ query }) {
       await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
     }
     const product = await productModel.findOne({ slug })
-    
     return {
         props: {
           product: JSON.parse(JSON.stringify(product)),
         },
     };
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   // Return an empty product if there's an error or the data doesn't exist
