@@ -11,7 +11,7 @@ export async function getServerSideProps({ query }) {
   const { slug } = query;  
   try {
     if(!mongoose.connections[0].readyState){
-      await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
+      await mongoose.connect('mongodb+srv://digitalwhopper:digitalwhopper@cluster0.q705xgr.mongodb.net/keshajewellery');
     }
     const category = await categoryModel.findOne({ slug })
     const products=await productModel.find({category});

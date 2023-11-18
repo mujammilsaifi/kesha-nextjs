@@ -22,7 +22,7 @@ export async function getServerSideProps({ query }) {
       await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
     }
     const product = await productModel.findOne({ slug })
-    console.log(product)
+    
     return {
         props: {
           product: JSON.parse(JSON.stringify(product)),
