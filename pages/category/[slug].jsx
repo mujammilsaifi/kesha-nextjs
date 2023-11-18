@@ -3,21 +3,23 @@ import { useRouter } from 'next/router'
 import Wrapper from '@/components/wrapper';
 import ProductCard from '@/components/ProductCart';
 import React from "react";
-import axios from "axios";
-const API = process.env.NEXT_PUBLIC_APP_API_URL;
+import mongoose from "mongoose"
+import productModel from '@/Models/productModel';
+import categoryModel from '@/Models/categoryModel';
+
 export async function getServerSideProps({ query }) {
-  // const router=useRouter()
-  const { slug } = query;
-  console.log(slug)
+  const { slug } = query;  
   try {
-    const { data } = await axios.get(`${API}/api/category/${slug}`);
-    if (data?.success) {
-      return {
-        props: {
-          catProducts: data.products,
-        },
-      };
+    if(!mongoose.connections[0].readyState){
+      await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
     }
+    const category = await categoryModel.findOne({ slug })
+    const products=await productModel.find({category});
+    return {
+        props: {
+          catProducts: JSON.parse(JSON.stringify(products)),
+        },
+    };
   } catch (error) {
     console.error(error);
   }
@@ -30,9 +32,8 @@ export async function getServerSideProps({ query }) {
   };
 }
 const Category = ({catProducts}) => {
-  const router = useRouter();
-  const { slug } = router.query;
-
+  const router=useRouter()
+  const {slug}=router.query;
   return (
     <section className='mt-[120px]'>
       <Wrapper>

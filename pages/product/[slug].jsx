@@ -7,25 +7,27 @@ import { Carousel } from "react-responsive-carousel";
 import Carousels from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { IoMdHeartEmpty } from "react-icons/io";
-const API=process.env.NEXT_PUBLIC_APP_API_URL
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import mongoose from "mongoose"
 import Link from "next/link";
 import { useCart } from '@/context/Cart';
 import { toast } from 'react-toastify';
+import productModel from '@/Models/productModel';
+
 export async function getServerSideProps({ query }) {
-  const { slug } = query;
-  
+  const { slug } = query;  
   try {
-    const { data } = await axios.get(`${API}/api/product/${slug}`);
-    if (data?.success) {
-      return {
-        props: {
-          product: data.product,
-        },
-      };
+    if(!mongoose.connections[0].readyState){
+      await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
     }
+    const product = await productModel.findOne({ slug })
+    console.log(product)
+    return {
+        props: {
+          product: JSON.parse(JSON.stringify(product)),
+        },
+    };
   } catch (error) {
     console.error(error);
   }
