@@ -64,7 +64,7 @@ const Testimonial = () => {
             {data.map((elm, i) => {
               const { image, details, name } = elm;
               return (
-                <>
+                
                   <SwiperSlide key={i}>
                     {/* single post s*/}
 
@@ -154,7 +154,7 @@ const Testimonial = () => {
                     </div>
                     {/* single post e*/}
                   </SwiperSlide>
-                </>
+                
               );
             })}
           </Swiper>

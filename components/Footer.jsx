@@ -89,7 +89,7 @@ const Footer = () => {
                     <div className="">
                         <Link href="/">
                             <img
-                                src="/kesha-logo.png"
+                                src="/Kesha-logo.webp"
                                 alt="logo"
                                 className="w-[80px] md:w-[100px] lg:w-[120px]"
                             />

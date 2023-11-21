@@ -103,7 +103,7 @@ const Header = () => {
       >
         <div className="h-[80%]">
           <Link href="/">
-            <img src="/kesha-logo.png" alt="logo" className="h-[100%]" />
+            <img src="/Kesha-logo.webp" alt="logo" className="h-[100%]" />
           </Link>
         </div>
 
