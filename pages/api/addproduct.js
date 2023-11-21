@@ -43,7 +43,7 @@ const handler=async(req,res)=>{
             const category = fields?.category?.[0];
 
             const { images } = files;
-            console.log(name, description, price,sprice,setting,material,length,width,weight, tag, gemstone, color, category)
+            
             
             const productImages=[]
             for (const file of images) {

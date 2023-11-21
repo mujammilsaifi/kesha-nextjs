@@ -20,7 +20,7 @@ const handler=async(req,res)=>{
         const exisitingUser=await userModel.findOne({email});
         //exisiting user
         if(exisitingUser){
-            return res.status(409).json({
+            return res.status(200).json({
                 success:false,
                 message:"User Already Register please login"
             })

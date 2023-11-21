@@ -121,7 +121,7 @@ const Customproduct = () => {
           </p>
           <button
             onClick={handleSubmit}
-            className="bg-black text-white font-oswald hover:text-balck py-2 px-4 border border-black hover:border-transparent rounded"
+            className="bg-black text-white font-oswald hover:text-balck py-2 px-4 border border-black hover:border-transparent rounded mb-4"
           >
             Submit
           </button>

@@ -1,6 +1,6 @@
 import React from "react";
 import Wrapper from "./wrapper";
-
+import { useRouter } from 'next/router';
 import Link from "next/link";
 import { SlSocialInstagram, SlSocialYoutube, SlSocialFacebook, SlSocialTwitter } from 'react-icons/sl'
 import { FaPhoneSquareAlt, FaMailBulk } from 'react-icons/fa'
@@ -80,8 +80,10 @@ const socialIcons = [
 ]
 
 const Footer = () => {
+    const router = useRouter();
+    const isAdminPage = router.pathname.startsWith('/admindashboard');
     return (
-        <footer className={`h-[100%]   bg-black py-8`}>
+        <footer className={isAdminPage? 'hidden':`h-[100%]   bg-black py-8`}>
             <Wrapper className={`max-w-[1400px] flex flex-col items-start justify-between gap-2 md:gap-5 md:flex-row p-5`}>
                 <section className="w-[90%] md:w-[30%] flex flex-col justify-between items-center">
                     <div className="">

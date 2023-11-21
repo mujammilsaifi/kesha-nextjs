@@ -3,6 +3,7 @@ import { useTopLoadingBar } from '@/context/TopLoadingBar';
 import axios from 'axios';
 import React,{ useState, useEffect,useRef} from 'react'
 import { toast } from 'react-toastify';
+import StaticalPage from './StaticalPage';
 const API=process.env.NEXT_PUBLIC_APP_API_URL
 
 const email="mujammilkhan00738@gmail.com"
@@ -214,8 +215,7 @@ const Admin = () => {
             toast.success(data?.message)
           }
       } catch (error) {
-          console.log(error);
-          alert(error);
+          toast.error(error);
       }
   }
 
@@ -223,7 +223,7 @@ const Admin = () => {
 const getAllProduct = async () => {
   setTopLoading(40)
   try {
-    const { data } = await axios.get(`${API}/api/getproducts`);
+    const { data } = await axios.get(`/api/getproducts`);
     if (data?.success) {
       setAllProducs(data?.products);
       setTopLoading(100)
@@ -253,7 +253,7 @@ const getAllProduct = async () => {
                 formDataToSend.append(key, catData[key]);
               }
             }
-            const {data} = await axios.post('/api/addcategory', formDataToSend);
+            const {data} = await axios.post('/api/addcategory', formDataToSend,{headers:{'Authorization':token}});
 
             if (data?.success) {
               setTopLoading(100)
@@ -519,7 +519,7 @@ const handleCreateSlide = async () => {
   const createCoupon = async () => {
       setTopLoading(40)
       try {
-        const {data}=await axios.post(`${API}/api/addcoupon`,{couponcode,coupondiscount,coupondate},{headers:{'Authorization':token}});
+        const {data}=await axios.post(`/api/addcoupon`,{couponcode,coupondiscount,coupondate},{headers:{'Authorization':token}});
         
         if (data?.success) {
           setTopLoading(100)
@@ -645,10 +645,9 @@ const handleCreateSlide = async () => {
 <div ref={componentRef} className="p-2 sm:ml-64">
    <div className=" border-2 border-gray-200  rounded-lg dark:border-gray-700 md:mt-[120px]">
     {/* Admin welcome Area */}
-    <main className={section === 0 ? "h-[550px] flex-1 bg-gray-200 p-4" : "hidden"}>
-    <div className="w-2/3 mx-auto text-center">
-        <h1 className="text-3xl font-bold mb-4">Welcome Admin</h1>
-        
+    <main className={section === 0 ? " h-[100%] flex-1 bg-gray-200 p-4" : "hidden"}>
+    <div className="w-[100%] mx-auto text-center">
+        <StaticalPage/>
     </div>
     </main>
     {/* Create Product Area */}
@@ -682,7 +681,7 @@ const handleCreateSlide = async () => {
                 >
                     <option value="">Select a Category</option>
                     {categories.map((category) => (
-                    <option key={category._id} value={category._id}>
+                    <option key={category._id} value={category.name}>
                         {category.name}
                     </option>
                     ))}
@@ -1101,7 +1100,7 @@ const handleCreateSlide = async () => {
 
     {/* Show All Product Area */}
     <main className={section===2?"w-[100vw] flex-1 bg-gray-200 p-4":"hidden"}>
-    <div class="relative overflow-x-auto">
+    <div className="relative overflow-x-auto">
     <table className="w-[100%] divide-y divide-gray-200 overflow-x-scroll">
         <thead className="bg-gray-50">
           <tr>
@@ -1160,7 +1159,7 @@ const handleCreateSlide = async () => {
                 <div className="text-sm text-gray-900">{product.color}</div>
               </td>
               <td className="px-6 py-4 border border-gray-300 whitespace-wrap">
-                <div className="text-sm text-gray-900">{product?.category?.name}</div>
+                <div className="text-sm text-gray-900">{product?.category}</div>
               </td>
                
               <td className=" px-2 py-2 border border-gray-300 whitespace-wrap">

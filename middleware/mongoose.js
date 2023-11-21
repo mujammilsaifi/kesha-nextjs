@@ -7,7 +7,7 @@ const connectDB=handler=> async(req,res)=>{
         if(mongoose.connections[0].readyState){
             return handler(req,res)
         }
-        const conn=await mongoose.connect('mongodb+srv://digitalwhopper:digitalwhopper@cluster0.q705xgr.mongodb.net/keshajewellery');
+        const conn=await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
         console.log(`Connected to mongoDB Database ${conn.connection.host}`);
         return handler(req,res)
     } catch (error) {

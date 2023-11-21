@@ -155,11 +155,11 @@ useEffect(() => {
             {/* product details */}
             <div className="text-md font-medium text-black my-4">
               <ul className='list-disc list-inside'>
-                <li><span>Material : </span>{`${product?.material}`}</li>
-                <li><span>Total Weight: </span>{`${product?.weight}`}</li>
-                <li><span>Ring Diameter : </span>{`${product?.length} cm (${product?.width} inch)`}</li>
-                <li><span>Settings : </span>{`${product?.setting}`}</li>
-                <li><span>Color: </span>{`${product?.color}`}</li>
+              {product?.material &&<li><span>Material : </span>{`${product?.material}`}</li>}
+                {product?.weight && <li><span>Total Weight: </span>{`${product?.weight}`}</li>}
+                {product?.length && <li><span>Ring Diameter : </span>{`${product?.length} mm (${product?.width} mm)`}</li>}
+                {product?.setting && <li><span>Settings : </span>{`${product?.setting}`}</li>}
+                {product?.color && <li><span>Color: </span>{`${product?.color}`}</li>}
                 
               </ul>
             </div>
@@ -408,7 +408,7 @@ useEffect(() => {
               <label htmlFor="message" className="block mb-2 text-sm font-medium text-black dark:text-black">Your message</label>
               <textarea id="message" rows={6} className="block p-2.5 w-full text-sm text-black bg-white rounded-lg shadow-sm border border-gray-300  dark:bg-white dark:border-black dark:placeholder-black dark:text-black" placeholder="Leave a comment..." defaultValue={""} />
             </div>
-            <button type="submit" className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-black sm:w-fit focus:ring-4 focus:outline-none ">Send message</button>
+            <button type="submit" className="py-3 px-3 text-sm font-medium text-center text-white rounded-lg bg-black sm:w-fit focus:ring-4 focus:outline-none ">Send message</button>
           </form>
         </section>
         
@@ -416,26 +416,26 @@ useEffect(() => {
             <div className="text-2xl font-bold mb-5">You Might Also Like</div>
             <Carousels
                 responsive={responsive}
-                containerclassName="-mx-[10px]"
+                containerclassName="mx-[10px]"
                 itemclassName="px-[10px]"
             >
                
                { products?.map((product, index) => (
                     <Link key={index}
                     href={`/product/${product?.slug}`}
-                    className="transform overflow-hidden bg-white duration-200 rounded-md hover:scale-105 cursor-pointer p-4"
+                    className=" transform overflow-hidden bg-white duration-200 rounded-md hover:scale-105 cursor-pointer px-4"
                 >
                     <img
                         width={500}
                         height={500}
                         src={`${product?.images[0]?.url}`}
                         alt={`hero-1.jpg`}
-                        className="rounded-md w-[300px]"
+                        className="rounded-md md:h-[320px] md:w-[360px] w-[360px]" 
                     />
-                    <div className="text-black/[0.9] mt-2">
+                    <div className="text-black/[0.9]  md:w-[360px] w-[360px]">
                         <h2 className="text-[16px] md:text-lg font-medium">{product?.name}</h2>
                         <div className="flex items-center text-black/[0.5]">
-                            <p className="mr-2 text-[16px] md:text-lg font-semibold">
+                            <p className="mr-1 text-[16px] md:text-lg font-semibold">
                                 {/* &#8377;{p.price} */}
                                
                                 &#8377;{product?.price-product?.sprice !=product?.price ? product?.sprice : product?.price}
@@ -444,7 +444,7 @@ useEffect(() => {
                                 {/* &#8377;{p.orignal_price} */}
                                 {product?.price-product?.sprice !=product?.price ? <span>&#8377;{product?.price}</span> : null}
                             </p>
-                            <p className="ml-auto text-[16px] md:text-lg font-medium text-green-500">
+                            <p className="ml-8 text-[16px] md:text-lg font-medium text-green-500">
                            
                             { product?.price - product?.sprice !== product?.price ? `${Math.round((product?.price - product?.sprice) / product?.price * 100)} % off` : null}
                             </p>

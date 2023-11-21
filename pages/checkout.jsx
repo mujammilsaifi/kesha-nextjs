@@ -121,7 +121,7 @@ const Checkout = () => {
         formData,
         products: cart,
         paymentMethod,
-      });
+      },{headers:{'Authorization':auth?.token}});
       if (data?.success) {
         setCart([]);
         localStorage.removeItem("cart");
@@ -389,11 +389,11 @@ const Checkout = () => {
               <div className="mb-4">
                 <input
                   disabled
-                  
                   type="radio"
                   id="phonePe"
                   name="paymentGateway"
                   value="PhonePe"
+                  checked={selectedGateway === "phonePe"}
                   onChange={handleGatewaySelection}
                   className="mr-2 form-radio h-5 w-5 text-blue-600"
                 />
@@ -407,7 +407,7 @@ const Checkout = () => {
               <div></div>
             </div>
             <div className="mb-4">
-              <button onClick={ () => selectedGateway === 'CashOnDelivery' ? handleCashOnDelivery() : handlePhonePe()}
+              <button onClick={ () => selectedGateway === 'CashOnDelivery' ? handlePhonePe() :handleCashOnDelivery() }
           className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full" disabled={isFormEmpty(formData)}>
                 Continue To Payment
               </button>

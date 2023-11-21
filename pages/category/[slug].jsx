@@ -11,10 +11,10 @@ export async function getServerSideProps({ query }) {
   const { slug } = query;  
   try {
     if(!mongoose.connections[0].readyState){
-      await mongoose.connect('mongodb+srv://digitalwhopper:digitalwhopper@cluster0.q705xgr.mongodb.net/keshajewellery');
+      await mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URL);
     }
     const category = await categoryModel.findOne({ slug })
-    const products=await productModel.find({category});
+    const products=await productModel.find({category:category.name});
     return {
         props: {
           catProducts: JSON.parse(JSON.stringify(products)),

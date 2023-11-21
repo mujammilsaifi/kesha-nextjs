@@ -44,8 +44,8 @@ const productModel=new mongoose.Schema({
         type: String,
       },
       category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category', // Reference to the 'Category' model
+        type: String,
+        
       },
       images: [
         {
