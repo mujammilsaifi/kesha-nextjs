@@ -5,10 +5,10 @@ const PASSWORD="jcwcsupgsokmttyu"
 import nodemailer from "nodemailer"
 const handler=async(req,res)=>{
     if(req.method=='POST'){ 
-        const token = req.headers.authorization;
-        if(!token){
-            return res.status(404).json({success:false,message:"UnAutherize Access"});
-        }
+        // const token = req.headers.authorization;
+        // if(!token){
+        //     return res.status(404).json({success:false,message:"UnAutherize Access"});
+        // }
         const {formData,products,paymentMethod} = req.body;
         const {userId,firstName,lastName,email,phone,city,country,state,pincode,address,address1}=formData;
         const order=  new orderModel({

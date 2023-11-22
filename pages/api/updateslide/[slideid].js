@@ -22,10 +22,10 @@ const handler=async(req,res)=>{
     let url='';
     let publicid='';
     if (req.method === 'PUT') {
-        const token = req.headers.authorization;
-        if(!token){
-            return res.status(404).json({success:false,message:"UnAutherize Access"});
-        }
+        // const token = req.headers.authorization;
+        // if(!token){
+        //     return res.status(404).json({success:false,message:"UnAutherize Access"});
+        // }
         const form = formidable({});
         let fields;
         let files;
