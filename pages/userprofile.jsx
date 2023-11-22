@@ -21,7 +21,7 @@ const Userprofile = () => {
     }, [])
     const getOrder=async()=>{
       try {
-        const {data}=await axios.get(`/api/order/userorder/${_id}`,{headers:{'Authorization':auth?.token}});
+        const {data}=await axios.get(`/api/order/userorder/${_id}`);
         if(data?.success)
           setOrder(data?.orders);
       } catch (error) {
