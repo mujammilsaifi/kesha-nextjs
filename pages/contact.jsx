@@ -66,7 +66,7 @@ const Contact = () => {
                       Our Location
                     </h4>
                     <p className="text-base text-body-color">
-                      99 S.t Jomblo Park Pekanbaru 28292. Indonesia
+                    D5, Bharu Marg, Ashok Vihar, Nandpuri Colony, Malviya Nagar, Jaipur, Rajasthan 302017
                     </p>
                   </div>
                 </div>
@@ -115,7 +115,7 @@ const Contact = () => {
               </div>
             </div>
             <div className="w-full md:w-[570px] mx-4 md:mx-0">
-              <div className="relative p-8 bg-white rounded-lg border shadow-2xl">
+              <div className="relative p-8 bg-white rounded-lg border border-gray-400 shadow-2xl">
                 <form>
                 <div className="mb-6">
                   <input required 

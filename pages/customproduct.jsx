@@ -42,7 +42,7 @@ const Customproduct = () => {
           Create your own unique style of jewellery
         </h1>
         <p className="text-center">Tell us about how you'd like to create your jewellery</p>
-        <hr className="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-black" />
+        <hr className="w-48 h-1 mx-auto my-1 bg-gray-500 border-0 rounded md:my-4 dark:bg-black" />
       </section>
       <section className="flex items-center justify-center">
         <form className="w-[90%] md:w-[40%] flex flex-col items-center justify-center gap-10">

@@ -157,7 +157,7 @@ useEffect(() => {
               <ul className='list-disc list-inside'>
               {product?.material &&<li><span>Material : </span>{`${product?.material}`}</li>}
                 {product?.weight && <li><span>Total Weight: </span>{`${product?.weight}`}</li>}
-                {product?.length && <li><span>Ring Diameter : </span>{`${product?.length} mm (${product?.width} mm)`}</li>}
+                {product?.length && <li><span>{product?.category} Dimension : </span>{`${product?.length} mm (${product?.width} mm)`}</li>}
                 {product?.setting && <li><span>Settings : </span>{`${product?.setting}`}</li>}
                 {product?.color && <li><span>Color: </span>{`${product?.color}`}</li>}
                 

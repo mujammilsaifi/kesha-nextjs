@@ -79,9 +79,7 @@ const about = () => {
                         <p>Manufacturing - ByKeshaJewellery !!</p>
                         <br />
                         <p>
-                            Servet Akgül - Kesha Jewellery
-                            <br />
-                            Hobyar Mah. Cagaloglu Yokusu Sk No 28 Kat 1 Ofis 104
+                        Malviya Nagar, Jaipur, Rajasthan 302017
                         </p>
                         <br />
                         <p>Jaipur | India</p>

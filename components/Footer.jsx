@@ -34,11 +34,7 @@ const dataPages = [
         link: "Shop",
         url: "/",
     },
-    {
-        id: 2,
-        link: "Home",
-        url: "/",
-    },
+    
     {
         id: 3,
         link: "About",

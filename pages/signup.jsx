@@ -205,13 +205,19 @@ function Signup() {
                     
                   </>
                 )}
-                {isLoginMode ? (
+                {isLoginMode ? (<>
                   <button
                     className="bg-red-500 text-white w-full py-2 rounded hover:bg-red-600"
                     onClick={handleLogin}
                   >
                     Login
                   </button>
+                  {/* <button
+                    className="bg-blue-500 w-full hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
+                    onClick={() => alert("google login")}
+                  >
+                    Continue With Google
+                  </button> <br /> */}</>
                 ) : (
                   <button
                     className="bg-red-500 text-white w-full py-2 rounded hover:bg-red-600"
@@ -220,22 +226,23 @@ function Signup() {
                     Sign Up
                   </button>
                 )}
-                <p
-                  className="mt-4 text-sm text-gray-500 cursor-pointer"
+                <button
+                  className="mt-4 text-sm text-blue-500 cursor-pointer"
                   onClick={() => setLoginMode(!isLoginMode)}
                 >
                   {isLoginMode
-                    ? "Create an account"
-                    : "Already have an account?"}
-                </p>
-                {!isLoginMode && (
-                  <p
+                    ? "Create an account?"
+                    : "Already have an account? LOGIN"}
+                </button>
+                {isLoginMode && (<>
+                  <br /><button
                     className="mt-2 text-sm text-gray-500 cursor-pointer"
                     onClick={() => setForgotPassword(true)}
                   >
                     Forgot Password?
-                  </p>
+                  </button></>
                 )}
+                
               </div>
             )}
           </div>
