@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { useAuth } from '@/context/Auth';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+
 import Link from "next/link";
 import { toast } from 'react-toastify';
 

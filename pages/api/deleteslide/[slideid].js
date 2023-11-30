@@ -13,10 +13,10 @@ cloudinary.config({
 const handler=async(req,res)=>{
     const {slideid}=req.query
     if(req.method=='DELETE'){
-        // const token = req.headers.authorization;
-        // if(!token){
-        //     return res.status(404).json({success:false,message:"UnAutherize Access"});
-        // }
+        const token = req.headers.authorization;
+        if(!token){
+            return res.status(404).json({success:false,message:"UnAutherize Access"});
+        }
         const deleteSlide=await slider1Model.findByIdAndDelete(slideid);
         if(deleteSlide?.publicid) {
             const public_id=deleteSlide.publicid

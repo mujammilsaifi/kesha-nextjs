@@ -150,7 +150,7 @@ const Admin = () => {
             }
           }
     
-          const {data}=await axios.post(`/api/addproduct`,formDataToSend);
+          const {data}=await axios.post(`/api/addproduct`,formDataToSend,{headers:{Authorization:token }});
           
           if (data?.success) {
             setTopLoading(100)
@@ -186,7 +186,7 @@ const Admin = () => {
             }
           }
     
-          const {data}=await axios.put(`/api/updateproduct/${productid}`,formDataToSend);
+          const {data}=await axios.put(`/api/updateproduct/${productid}`,formDataToSend,{headers:{Authorization:token }});
           
           if (data?.success) {
             setTopLoading(100)
@@ -209,7 +209,7 @@ const Admin = () => {
       alert("Do you want to Delete Product!")
       setTopLoading(40)
       try {
-          const {data}=await axios.delete(`/api/deleteproduct/${productid}`);
+          const {data}=await axios.delete(`/api/deleteproduct/${productid}`,{headers:{Authorization:token }});
           if(data?.success){
             setTopLoading(100)
             toast.success(data?.message)
@@ -253,7 +253,7 @@ const getAllProduct = async () => {
                 formDataToSend.append(key, catData[key]);
               }
             }
-            const {data} = await axios.post('/api/addcategory', formDataToSend);
+            const {data} = await axios.post('/api/addcategory', formDataToSend,{headers:{Authorization:token }});
 
             if (data?.success) {
               setTopLoading(100)
@@ -282,7 +282,7 @@ const getAllProduct = async () => {
                 formDataToSend.append(key, catData[key]);
               }
             }
-          const {data}=await axios.put(`/api/updatecategory/${categoryid}`);
+          const {data}=await axios.put(`/api/updatecategory/${categoryid}`,{headers:{Authorization:token }});
           
           if (data?.success) {
             toast.success('Category updated successfully');
@@ -326,7 +326,7 @@ const getAllProduct = async () => {
         alert("Do you want to Delete Category!")
         setTopLoading(40)
         try {
-            const {data}=await axios.delete(`/api/deletecategory/${categoryid}`);
+            const {data}=await axios.delete(`/api/deletecategory/${categoryid}`,{headers:{Authorization:token }});
             if(data?.success){
               setTopLoading(100)
               toast.success("Category Deleted!")
@@ -355,7 +355,7 @@ const handleCreateSlide = async () => {
           }
 
   try {
-    const {data} = await axios.post('/api/addslider', formDataToSend);
+    const {data} = await axios.post('/api/addslider', formDataToSend,{headers:{Authorization:token }});
     if (data?.success) {
       toast.success(data?.message);
       setTopLoading(100)
@@ -408,7 +408,7 @@ const handleCreateSlide = async () => {
               }
             }
       try {
-          const {data}=await axios.put(`/api/updateslide/${slideid}`,formDataToSend);
+          const {data}=await axios.put(`/api/updateslide/${slideid}`,formDataToSend,{headers:{Authorization:token }});
           if(data?.success){
             setTopLoading(100)
             toast.success(data?.message)
@@ -423,7 +423,7 @@ const handleCreateSlide = async () => {
        
         setTopLoading(40)
         try {
-            const {data}=await axios.delete(`/api/deleteslide/${slideid}`);
+            const {data}=await axios.delete(`/api/deleteslide/${slideid}`,{headers:{Authorization:token }});
             if(data?.success){
                toast.success(data?.message)
                setTopLoading(100)
@@ -438,7 +438,7 @@ const handleCreateSlide = async () => {
   const getOrders=async()=>{
       setTopLoading(40)
       try {
-        const {data}=await axios.get(`/api/order/getallorder`);
+        const {data}=await axios.get(`/api/order/getallorder`,{headers:{Authorization:token }});
         if(data?.success)
         setTopLoading(100)
         setOrders(data?.orders);
@@ -456,7 +456,7 @@ const handleCreateSlide = async () => {
     const updateStatus=async(orderid,value)=>{
       setTopLoading(40)
       try {
-        await axios.put(`/api/order/orderstatus/${orderid}`,{value});
+        await axios.put(`/api/order/orderstatus/${orderid}`,{value},{headers:{Authorization:token }});
         getOrders();
         setTopLoading(100)               
       } catch (error) {
@@ -468,7 +468,7 @@ const handleCreateSlide = async () => {
       setSection(10)
       setTopLoading(40)
       try {
-        const {data}=await axios.get(`/api/order/getsingle/${orderid}`);
+        const {data}=await axios.get(`/api/order/getsingle/${orderid}`,{headers:{Authorization:token }});
         if(data?.success){
           setTopLoading(100)
           setOrderDetails(data?.order[0])
@@ -519,7 +519,7 @@ const handleCreateSlide = async () => {
   const createCoupon = async () => {
       setTopLoading(40)
       try {
-        const {data}=await axios.post(`/api/addcoupon`,{couponcode,coupondiscount,coupondate});
+        const {data}=await axios.post(`/api/addcoupon`,{couponcode,coupondiscount,coupondate},{headers:{Authorization:token }});
         
         if (data?.success) {
           setTopLoading(100)
@@ -536,7 +536,7 @@ const handleCreateSlide = async () => {
     const deleteCoupon= async(couponid)=>{
       setTopLoading(40)
       try {
-          const {data}=await axios.delete(`/api/coupondelete/${couponid}`);
+          const {data}=await axios.delete(`/api/coupondelete/${couponid}`,{headers:{Authorization:token }});
           if(data?.success){
             setTopLoading(100)
             toast.success("Coupon Deleted!")   
@@ -905,7 +905,7 @@ const handleCreateSlide = async () => {
                 >
                     <option value="">Select a Category</option>
                     {categories.map((category) => (
-                    <option key={category._id} value={category._id}>
+                    <option key={category._id} value={category.name}>
                         {category.name}
                     </option>
                     ))}

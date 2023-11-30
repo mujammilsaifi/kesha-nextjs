@@ -17,7 +17,7 @@ export default function Home() {
     slug: "earrings",
   };
   const category3 = {
-    name: "Bracelet",
+    name: "Bracelets",
     slug: "bracelet",
   };
   

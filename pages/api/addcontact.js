@@ -1,15 +1,14 @@
 import contactFormModel from "@/Models/contactFormModel";
 import connectDB from "@/middleware/mongoose";
-// const EMAIL=process.env.EMAIL
-// const PASSWORD=process.env.PASSWORD
-const EMAIL="mujammilkhan00738@gmail.com"
-const PASSWORD="jcwcsupgsokmttyu"
+const EMAIL=process.env.NEXT_PUBLIC_EMAIL
+const PASSWORD=process.env.NEXT_PUBLIC_PASSWORD
+
 import nodemailer from "nodemailer"
 const handler=async(req,res)=>{
     if (req.method == 'POST') {
         const {formData}=req.body;
         const {name,email,phone,message}=formData;
-        console.log(name)
+        
         await new contactFormModel({name,email,phone,message}).save();
         let config = {
             service : 'gmail',

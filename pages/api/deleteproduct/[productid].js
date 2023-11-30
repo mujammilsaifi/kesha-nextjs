@@ -12,10 +12,10 @@ cloudinary.config({
 const handler=async(req,res)=>{
     const {productid}=req.query
     if(req.method=='DELETE'){
-        // const token = req.headers.authorization;
-        // if(!token){
-        //     return res.status(404).json({success:false,message:"UnAutherize Access"});
-        // }
+        const token = req.headers.authorization;
+        if(!token){
+            return res.status(404).json({success:false,message:"UnAutherize Access"});
+        }
         const deletedproduct=await productModel.findByIdAndDelete(productid);
         for (const img of deletedproduct?.images) {
             const public_id=img.publicid

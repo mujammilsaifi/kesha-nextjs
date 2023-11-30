@@ -47,7 +47,7 @@ const PaymentFaild = () => {
                     <div className="text-base mt-5">
                         For any product related query, drop an email to
                     </div>
-                    <div className="underline">help@kesha.com</div>
+                    <div className="underline">keshajewels@gmail.com</div>
 
                     <Link href="/" className="font-bold mt-5">
                         Continue Shopping

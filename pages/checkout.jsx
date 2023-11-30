@@ -226,11 +226,11 @@ const Checkout = () => {
     return valid;
   };
   return (
-    <div className="w-full bg-gray-100 min-h-[100%] p-4 mt-[120px]">
-      <Wrapper>
-        <div className="md:max-w-7xl mx-auto flex flex-col sm:flex-row">
+    <div className="w-full bg-gray-100 min-h-[100%] py-3 px-1  md:p-4 mt-[120px]">
+     
+        <div className="md:max-w-7xl w-full mx-auto flex flex-col sm:flex-row">
           {/* Billing Information */}
-          <div className="md:w-2/3 p-4 bg-white rounded-lg shadow-md">
+          <div className="md:w-2/3 w-[100%] p-2 md:p-4 bg-white rounded-lg shadow-md mt-3">
             <h1 className="text-2xl font-semibold mb-4">Billing Information</h1>
 
             <div className="flex flex-wrap -mx-2">
@@ -478,7 +478,7 @@ const Checkout = () => {
           </div>
           
         </div>
-      </Wrapper>
+    
     </div>
   );
 };

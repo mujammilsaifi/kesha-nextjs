@@ -13,10 +13,10 @@ cloudinary.config({
 const handler=async(req,res)=>{
     const {categoryid}=req.query
     if(req.method=='DELETE'){
-        // const token = req.headers.authorization;
-        // if(!token){
-        //     return res.status(404).json({success:false,message:"UnAutherize Access"});
-        // }
+        const token = req.headers.authorization;
+        if(!token){
+            return res.status(404).json({success:false,message:"UnAutherize Access"});
+        }
         const deleteCategory=await categoryModel.findByIdAndDelete(categoryid);
         if(deleteCategory?.publicid) {
             const public_id=deleteCategory.publicid
