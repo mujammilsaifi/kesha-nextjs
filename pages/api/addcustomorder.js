@@ -1,13 +1,14 @@
 import customorderModel from "@/Models/customorderModel";
 import connectDB from "@/middleware/mongoose";
-// const EMAIL=process.env.EMAIL
-// const PASSWORD=process.env.PASSWORD
-const EMAIL="mujammilkhan00738@gmail.com"
-const PASSWORD="jcwcsupgsokmttyu"
+const EMAIL=process.env.EMAIL
+const PASSWORD=process.env.PASSWORD
+
 import nodemailer from "nodemailer"
 const handler=async(req,res)=>{
     if (req.method == 'POST') {
-        const {name,email,phone,gemstone,type,occasion,message}=req.body;
+        const {formData}=req.body;
+        const {name,email,phone,gemstone,type,occasion,message}=formData;
+        
         if(!name){
             return res.json({success:false,message:"Name is required"})
         }

@@ -11,12 +11,51 @@ import Wrapper from "@/components/wrapper";
 const merchantId = "PGTESTPAYUAT";
 const saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
 const saltIndex = 1;
+const indianStates = [
+  'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chhattisgarh',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jharkhand',
+  'Karnataka',
+  'Kerala',
+  'Madhya Pradesh',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
+  'Odisha',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttar Pradesh',
+  'Uttarakhand',
+  'West Bengal',
+  'Andaman and Nicobar Islands',
+  'Chandigarh',
+  'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi',
+  'Lakshadweep',
+  'Puducherry',
+];
+
+
 const Checkout = () => {
   useEffect(() => {
     if (cart?.length <= 0) {
       router.push("/");
     }
   }, []);
+  const [errors, setErrors] = useState({});
   const router = useRouter();
   const [totalPayment] = useTotalPayment();
   const [auth, setAuth] = useAuth();
@@ -157,6 +196,8 @@ const Checkout = () => {
 
   // Function to execute when Cash On Delivery is selected
   const handleCashOnDelivery = () => {
+    
+    if(validateForm()){
     const method = {
       success: true,
       data: {
@@ -168,16 +209,22 @@ const Checkout = () => {
     };
     orderPlace(method);
     router.push("/paymentSuccess");
+   }
   };
 
-  function isFormEmpty(formData) {
-    for (const key in formData) {
-      if (formData[key] === "") {
-        return true; // If any field is empty, return true
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+    for (const field in formData) {
+      if (formData[field].trim() === '' || formData[field].length < 3) {
+        newErrors[field] = `${field} is required`;
+        valid = false;
       }
     }
-    return false; // All fields are filled
-  }
+
+    setErrors(newErrors);
+    return valid;
+  };
   return (
     <div className="w-full bg-gray-100 min-h-[100%] p-4 mt-[120px]">
       <Wrapper>
@@ -202,6 +249,7 @@ const Checkout = () => {
                   value={formData.firstName}
                   onChange={handleFormChange}
                 />
+                {errors.firstName && <p className='text-red-500'>{errors.firstName}</p>}
               </div>
               <div className="w-1/2 px-2 mb-4">
                 <label
@@ -218,6 +266,7 @@ const Checkout = () => {
                   value={formData.lastName}
                   onChange={handleFormChange}
                 />
+                {errors.lastName && <p className='text-red-500'>{errors.lastName}</p>}
               </div>
 
               <div className="w-1/2 px-2 mb-4">
@@ -229,12 +278,13 @@ const Checkout = () => {
                 </label>
                 <input
                   className="border border-gray-300 rounded-md py-2 px-4 block w-full focus:outline-none focus:ring focus:border-blue-300 transition duration-150 ease-in-out"
-                  type="text"
+                  type="number"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleFormChange}
                 />
+                {errors.phone && <p className='text-red-500'>{errors.phone}</p>}
               </div>
               <div className="w-1/2 px-2 mb-4">
                 <label
@@ -251,6 +301,7 @@ const Checkout = () => {
                   value={formData.email}
                   onChange={handleFormChange}
                 />
+                {errors.email && <p className='text-red-500'>{errors.email}</p>}
               </div>
 
               <div className="w-1/2 px-2 mb-4">
@@ -260,14 +311,18 @@ const Checkout = () => {
                 >
                   Country
                 </label>
-                <input
-                  className="border border-gray-300 rounded-md py-2 px-4 block w-full focus:outline-none focus:ring focus:border-blue-300 transition duration-150 ease-in-out"
-                  type="text"
+                <select
                   id="country"
-                  name="country"
-                  value={formData.country}
+                  className="border border-gray-300 rounded-md py-2 px-4 block w-full focus:outline-none focus:ring focus:border-blue-300 transition duration-150 ease-in-out"
                   onChange={handleFormChange}
-                />
+                  name="country"
+                >       
+                <option  defaultValue >Select Country --</option>     
+                  <option value="India" >India</option>
+                  
+                </select>
+                
+                {errors.country && <p className='text-red-500'>{errors.country}</p>}
               </div>
 
               <div className="w-1/2 px-2 mb-4">
@@ -277,14 +332,21 @@ const Checkout = () => {
                 >
                   State
                 </label>
-                <input
-                  className="border border-gray-300 rounded-md py-2 px-4 block w-full focus:outline-none focus:ring focus:border-blue-300 transition duration-150 ease-in-out"
-                  type="text"
+                <select
                   id="state"
-                  name="state"
-                  value={formData.state}
+                  className="border border-gray-300 rounded-md py-2 px-4 block w-full focus:outline-none focus:ring focus:border-blue-300 transition duration-150 ease-in-out"
                   onChange={handleFormChange}
-                />
+                  name="state"
+                >       
+                <option  defaultValue >Select State --</option> 
+                {indianStates?.map((st,i)=>(
+                  <option key={i} value={st} >{st}</option>
+                ))}    
+                  
+                  
+                </select>
+                
+                {errors.state && <p className='text-red-500'>{errors.state}</p>}
               </div>
 
               <div className="w-1/2 px-2 mb-4">
@@ -296,12 +358,13 @@ const Checkout = () => {
                 </label>
                 <input
                   className="border border-gray-300 rounded-md py-2 px-4 block w-full focus:outline-none focus:ring focus:border-blue-300 transition duration-150 ease-in-out"
-                  type="text"
+                  type="number"
                   id="pincode"
                   name="pincode"
                   value={formData.pincode}
                   onChange={handleFormChange}
                 />
+                {errors.pincode && <p className='text-red-500'>{errors.pincode}</p>}
               </div>
 
               <div className="w-1/2 px-2 mb-4">
@@ -319,6 +382,7 @@ const Checkout = () => {
                   value={formData.city}
                   onChange={handleFormChange}
                 />
+                {errors.city && <p className='text-red-500'>{errors.city}</p>}
               </div>
 
               <div className="w-full px-2 mb-4">
@@ -336,11 +400,10 @@ const Checkout = () => {
                   value={formData.address}
                   onChange={handleFormChange}
                 />
+                {errors.address && <p className='text-red-500'>{errors.address}</p>}
               </div>
             </div>
-            <div className="mb-4">
-            {isFormEmpty(formData) && <h3 className="block text-red-700 text-sm font-bold mb-2">Please Fill All Details Before Continue To Payment</h3>}
-            </div>
+            
           </div>
 
           {/* Cart Summary */}
@@ -408,7 +471,7 @@ const Checkout = () => {
             </div>
             <div className="mb-4">
               <button onClick={ () => selectedGateway === 'CashOnDelivery' ? handlePhonePe() :handleCashOnDelivery() }
-          className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full" disabled={isFormEmpty(formData)}>
+          className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full">
                 Continue To Payment
               </button>
             </div>

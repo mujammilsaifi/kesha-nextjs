@@ -29,7 +29,7 @@ const HeroSlider = () => {
     }, [])
     return (
         // className={`px-5 py-5`}
-        <div className="relative text-white text-[20px] w-full mx-auto mt-[105px]">
+        <div className="relative text-white text-[20px] w-full mx-auto md:mt-[125px] mt-[90px]">
             <Carousel
                 autoPlay={true}
                 infiniteLoop={true}

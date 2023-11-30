@@ -108,7 +108,7 @@ useEffect(() => {
   const itemExists = cart.some((p) => p._id ===product?._id);
   
   return (
-    <section className='w-full py-5 md:py-20 mt-[60px] md:mt-[100px]'>
+    <section className='w-full py-5 md:py-20 mt-[60px] md:mt-[135px]'>
       <Wrapper className={`w-[1600px]`}>
         <div className="flex flex-col lg:flex-row md:px-4 gap-[10px]: md:gap-[20px] lg:gap-[100px]">
           {/* left column start */}
@@ -157,7 +157,7 @@ useEffect(() => {
               <ul className='list-disc list-inside'>
               {product?.material &&<li><span>Material : </span>{`${product?.material}`}</li>}
                 {product?.weight && <li><span>Total Weight: </span>{`${product?.weight}`}</li>}
-                {product?.length && <li><span>{product?.category} Dimension : </span>{`${product?.length} mm (${product?.width} mm)`}</li>}
+                {product?.length && <li><span>{product?.category} Size : </span>{`${product?.length} mm (${product?.width} mm)`}</li>}
                 {product?.setting && <li><span>Settings : </span>{`${product?.setting}`}</li>}
                 {product?.color && <li><span>Color: </span>{`${product?.color}`}</li>}
                 
@@ -195,7 +195,7 @@ useEffect(() => {
                   const cartItem = { ...product,psize,qty:1,salePrice};
                   setCart([...cart, cartItem]);
                   localStorage.setItem("cart", JSON.stringify([...cart,cartItem]));
-                  toast.success("Item Added Successfully");
+                  toast.success("Item Added Successfully",{toastId: 'add_to_cart'});
                 } else {
                   router.push('/cart');
                 }
@@ -433,7 +433,7 @@ useEffect(() => {
                         className="rounded-md md:h-[320px] md:w-[360px] w-[360px]" 
                     />
                     <div className="text-black/[0.9]  md:w-[360px] w-[360px]">
-                        <h2 className="text-[16px] md:text-lg font-medium">{product?.name}</h2>
+                        <h2 className="text-[16px] mt-2 md:text-lg font-medium">{product?.name.slice(0,65)}...</h2>
                         <div className="flex items-center text-black/[0.5]">
                             <p className="mr-1 text-[16px] md:text-lg font-semibold">
                                 {/* &#8377;{p.price} */}

@@ -17,6 +17,7 @@ const Cart = () => {
 
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [appliedCouponErr, setAppliedCouponErr] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [newTotal, setNewTotal] = useState(0);
   
@@ -47,7 +48,14 @@ const Cart = () => {
       setCart(existingCart)
       localStorage.setItem("cart", JSON.stringify(existingCart));
       }
+      
+    }else{
+      setAppliedCouponErr(true)
+      const timeoutId = setTimeout(() => {
+        setAppliedCouponErr(false)
+      }, 3000);      
     }
+    
   };
 
 
@@ -111,7 +119,7 @@ const Cart = () => {
                     <>
                     <div className="flex justify-between">
                     <div className=" text-md md:text-lg font-medium text-black">
-                      Coupon Discount
+                      Coupon Apply
                     </div>
                     <div className="text-md md:text-lg font-medium text-black">
                       -{discount}
@@ -154,6 +162,11 @@ const Cart = () => {
           Coupon "{appliedCoupon}" applied successfully!
         </div>
       )}
+      {appliedCouponErr && (
+        <div className="bg-red-200 border-l-4 border-red-500 text-red-700 p-4 mb-4">
+          Coupon Code is not Valid!
+        </div>
+      )}
 
                   <div className="text-sm md:text-md py-5 border-t mt-5">
                     The subtotal reflects the total price of your order,
@@ -179,7 +192,7 @@ const Cart = () => {
             {/* CART CONTENT END */}
           </>
         ):(
-          <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
+          <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-[90px]">
             <Image
               src="/empty-cart.jpg"
               width={300}

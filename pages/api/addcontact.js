@@ -7,8 +7,9 @@ const PASSWORD="jcwcsupgsokmttyu"
 import nodemailer from "nodemailer"
 const handler=async(req,res)=>{
     if (req.method == 'POST') {
-        const {name,email,phone,message}=req.body;
-        
+        const {formData}=req.body;
+        const {name,email,phone,message}=formData;
+        console.log(name)
         await new contactFormModel({name,email,phone,message}).save();
         let config = {
             service : 'gmail',

@@ -44,7 +44,7 @@ const about = () => {
             </Head>
 
             <Wrapper>
-                <section className="p-5 flex-col md:flex lg:flex-row items-start justify-center gap-10 md:mt-[10px] lg:mt-[100px] mt-[20px]">
+                <section className="p-5 flex-col md:flex lg:flex-row items-start justify-center gap-10 md:mt-[10px] lg:mt-[130px] mt-[20px]">
                     <section className="img rounded-md">
                         <Image src={`/category/1.png`} width={4000} height={4000} alt="about" className="rounded-md"/>
                     </section>

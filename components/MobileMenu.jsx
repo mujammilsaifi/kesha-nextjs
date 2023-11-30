@@ -10,12 +10,7 @@ const data = [
     { id: 5, name: "CustomProduct", url: "/customproduct" }
 ];
 
-const subMenuData = [
-    { id: 1, name: "Rings", doc_count: 11 },
-    { id: 2, name: "Necklaces", doc_count: 8 },
-    { id: 3, name: "Earings", doc_count: 64 },
-    { id: 4, name: "Best collection", doc_count: 107 },
-];
+
 
 const MobileMenu = ({
     showCatMenu,

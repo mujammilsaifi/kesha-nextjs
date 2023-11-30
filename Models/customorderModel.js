@@ -23,4 +23,5 @@ const customJewellerySchema=new mongoose.Schema({
         type:String,  
     }
 },{timestamps:true});
+mongoose.models={}
 export default mongoose.model("CoustomJewellery",customJewellerySchema);

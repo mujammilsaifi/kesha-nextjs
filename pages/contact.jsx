@@ -8,28 +8,49 @@ import { useTopLoadingBar } from "@/context/TopLoadingBar";
 import { toast } from 'react-toastify';
 const Contact = () => {
   const[loading,setTopLoading] =useTopLoadingBar();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [errors, setErrors] = useState({});
   const [isSubmit, setSubmit]=useState(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+
+    // Check if fields are not empty and meet the required length
+    for (const field in formData) {
+      if (formData[field].trim() === '' || formData[field].length < 5) {
+        newErrors[field] = `${field} is required`;
+        valid = false;
+      }
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
   const handleSubmit=async(e)=>{
     e.preventDefault();
     try {
+      if (validateForm()) {
      setTopLoading(40);
-        const { data } = await axios.post(`/api/addcontact`, {
-          name,
-          email,
-          phone,
-          message
-        });
+        const { data } = await axios.post(`/api/addcontact`, {formData});
         if (data?.success) {
           toast.success("Form Data submit successfully")
           setTopLoading(100)
           setSubmit(true);
           window.location.reload();
         }
-      
+      }
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +109,7 @@ const Contact = () => {
                       Phone Number
                     </h4>
                     <p className="text-base text-body-color">
-                      (+62)81 414 257 9980
+                      (+91) 6200379161
                     </p>
                   </div>
                 </div>
@@ -118,34 +139,50 @@ const Contact = () => {
               <div className="relative p-8 bg-white rounded-lg border border-gray-400 shadow-2xl">
                 <form>
                 <div className="mb-6">
-                  <input required 
+                <label>Name:</label>
+                  <input  
                     type="text"
+                    name="name"
                     placeholder="Enter Your Name"
-                    className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none" onChange={e=>setName(e.target.value)}
+                    className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"  value={formData.name}
+                    onChange={handleChange}
                   />
+                  {errors.name && <p className='text-red-500'>{errors.name}</p>}
                 </div>
                 <div className="mb-6">
-                  <input required 
+                <label>Email:</label>
+                  <input  
                     type="email"
+                    name="email"
                     placeholder="Enter Your Email"
-                    className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none" onChange={e=>setEmail(e.target.value)}
+                    className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"  value={formData.email}
+                    onChange={handleChange}
                   />
+                  {errors.email && <p className='text-red-500'>{errors.email}</p>}
                 </div>
                 <div className="mb-6">
-                  <input required 
+                <label>Phone:</label>
+                  <input  
                     type="text"
+                    name="phone"
                     placeholder="Enter Your Phone"
-                    className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none" onChange={e=>setPhone(e.target.value)}
+                    className="border-[f0f0f0] w-full rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"  value={formData.phone}
+                    onChange={handleChange}
                   />
+                  {errors.phone && <p className='text-red-500'>{errors.phone}</p>}
                 </div>
                 <div className="mb-6">
-                  <textarea required
+                <label>Message:</label>
+                  <textarea 
+                    name="message"
                     rows="2"
                     placeholder="Enter Your Message"
                     
                     className="border-[f0f0f0] w-full resize-none rounded border py-3 px-[14px] text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none"
-                    onChange={e=>setMessage(e.target.value)}
+                    value={formData.message}
+                    onChange={handleChange}
                   />
+                  {errors.message && <p className='text-red-500'>{errors.message}</p>}
                 </div>
                 
                   <div>

@@ -49,6 +49,7 @@ const Header = () => {
     window.addEventListener("scroll", controlNavbar);
     return () => {
       window.removeEventListener("scroll", controlNavbar);
+      setMobileMenu(false)
     };
   }, [lastScrollY]);
 
@@ -87,19 +88,20 @@ const Header = () => {
           waitingTime={400}
           progress={loading}
         />
+        
         <ToastContainer  
-          autoClose={2000}
-          hideProgressBar={false}
+          position="top-right"
+          autoClose={100}
+          hideProgressBar={true}
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
+          limit={1}          
           draggable
-          pauseOnHover
-          theme="light"/>
+          />
       <header
         // backdrop-filter backdrop-blur-lg bg-opacity-30
-        className={`w-full h-[80px] md:h-[100px] px-10 bg-white flex items-center justify-between z-20 fixed  top-0 transition-transform duration-300 drop-shadow-sm ${show}`}
+        className={`w-full h-[80px] md:h-[130px] px-10 bg-white flex items-center justify-between z-20 fixed  top-0 transition-transform duration-300 drop-shadow-sm ${show}`}
       >
         <div className="h-[80%]">
           <Link href="/">
@@ -129,9 +131,9 @@ const Header = () => {
           <Link href="/cart">
             <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-blacl/[0.05] cursor-pointer relative">
               <IoMdHeartEmpty className="text-[15px] md:text-[20px]" />
-              <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                0
-              </div>
+              {/* <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
+                
+              </div> */}
             </div>
           </Link>
 

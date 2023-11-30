@@ -14,13 +14,13 @@ const data = [
 const Menu = ({ showCatMenu, setShowCatMenu,categories}) => {
    
     return (
-        <ul className='hidden md:flex items-center gap-8 font-semibold text-balck [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>
+        <ul className='hidden md:flex items-center text-lg gap-8 font-semibold text-balck [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>
             {
                 data.map((elm) => {
                     return (
                         <React.Fragment key={elm.id}>
                             {!!elm?.subMenu ? (
-                                <li className='cursor-pointer flex items-center gap-2 relative'
+                                <li className='cursor-pointer text-lg flex items-center gap-2 relative'
                                     onMouseEnter={() => setShowCatMenu(true)}
                                     onMouseLeave={() => setShowCatMenu(false)}
                                 >
@@ -32,7 +32,7 @@ const Menu = ({ showCatMenu, setShowCatMenu,categories}) => {
                                                 {categories?.map((subm) => {
                                                     return (
                                                         <Link key={subm.id} href={`/category/${subm.slug}`} onClick={() => setShowCatMenu(false)}>
-                                                            <li className='h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md'>
+                                                            <li className='h-12 flex justify-between items-center text-lg px-3 hover:bg-black/[0.03] rounded-md'>
                                                                 {subm.name}
                                                                 {/* <span className='opacity-50 text-sm'>{`(${subm.doc_count})`}</span> */}
                                                             </li>

@@ -87,7 +87,7 @@ const CartItem = ({product,totalPrice}) => {
             <div className="w-full flex flex-col">
                 <div className="flex flex-col md:flex-row justify-between">
                     {/* PRODUCT TITLE */}
-                    <div className="text-lg md:text-2xl font-semibold text-black/[0.8]">
+                    <div className="text-sm md:text-2xl font-semibold text-black/[0.8]">
                         {`${name}`}
                     </div>
 

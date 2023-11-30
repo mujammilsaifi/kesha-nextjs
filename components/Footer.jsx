@@ -108,9 +108,9 @@ const Footer = () => {
                     </div>
                 </section>
                 <section className={`flex flex-col items-center justify-between md:flex-col lg:flex-row pt-2 md:pt-10`}>
-                    <section className="Quick-links">
+                    <section className="Quick-links" style={{textAlign: "center"}}    >
                         <span className="text-white text-[18px] md:text-[18px]">Pages</span>
-                        <ul className="flex flex-col gap-1 md:gap-2 mt-[20px]">
+                        <ul className="flex flex-col justify-between gap-1 md:gap-2 mt-[20px]">
                             {
                                 dataPages?.map((elm) => {
                                     return (
@@ -126,7 +126,7 @@ const Footer = () => {
                     </section>
                 </section>
                 <section className={`flex flex-col items-center justify-between md:flex-col lg:flex-row pt-2 md:pt-10`}>
-                    <section className="Quick-links">
+                    <section className="Quick-links" style={{textAlign: "center"}} >
                         <span className="text-white text-[18px] md:text-[18px]">Quik links</span>
                         <ul className="flex flex-col gap-1 md:gap-2 mt-[20px]">
                             {
@@ -143,16 +143,16 @@ const Footer = () => {
                         </ul>
                     </section>
                 </section>
-                <section className="w-[90%] md:w-[30%] flex flex-col justify-between items-start pt-2 md:pt-10">
+                <section className="w-[90%] md:w-[30%] flex flex-col justify-between items-center pt-2 md:pt-10">
                     <div className="">
                         <p className="text-white text-[18px] md:text-[18px]">Contact Us</p>
                     </div>
                     <div className="text-white text-[16px] my-4">
-                        <p className="flex items-center gap-2"><FaPhoneSquareAlt /> : +91 00000000</p>
+                        <p className="flex items-center gap-2"><FaPhoneSquareAlt /> : +91 6200379161</p>
                         <p className="flex items-center gap-2"><FaMailBulk /> : keshajewels@gmail.com</p>
                     </div>
-                    <div className="text-white">
-                        D5, Bharu Marg, Ashok Vihar, Nandpuri Colony, Malviya Nagar, Jaipur, Rajasthan 302017
+                    <div className="flex ">
+                       <p className="items-center text-white text-center "> D5, Bharu Marg, Ashok Vihar, Nandpuri Colony, Malviya Nagar, Jaipur, Rajasthan 302017</p>
                     </div>
                 </section>
             </Wrapper>

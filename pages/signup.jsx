@@ -2,12 +2,15 @@ import { useAuth } from "@/context/Auth";
 import { useCart } from "@/context/Cart";
 import { useTopLoadingBar } from "@/context/TopLoadingBar";
 import axios from "axios";
+
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 const API = process.env.NEXT_PUBLIC_APP_API_URL;
+const EMAIL=process.env.NEXT_PUBLIC_EMAIL
+const PASSWORD=process.env.NEXT_PUBLIC_PASSWORD
 
 function Signup() {
     const[loading,setTopLoading] =useTopLoadingBar();
@@ -23,6 +26,7 @@ function Signup() {
     }
 
   const [name, setName] = useState("");
+  const [emailErr, setEmailErr] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -30,18 +34,23 @@ function Signup() {
   const [isForgotPassword, setForgotPassword] = useState(false)
   const [isSignup, setIsSignup] = useState(true);
   const [otp, setOtp] = useState('');
+  const [emailverify, setEmailverify] = useState(false);
 
   const [userOtp, setUserOtp] = useState(false);
   const [repass, setRepass] = useState(false);
+  const [emailOTP, setEmailOTP] = useState('');
+  const [formValidate, setValidateForm] = useState(false);
+  const [confirmPasswordErr, setConfirmPasswordErr] = useState(false);
+  const [loginErr, setLoginErr] = useState('');
 
   
 
-  const handleSignup = async () => {
-    setTopLoading(40)
-    // Add your signup logic here
-    // alert(`${name} ${email}${password} ${confirmPassword} ${phone}${address}`)
+  const forSignupAPI = async () => {
+    setLoginMode(false);
+    setIsSignup(true)
+    setTopLoading(40);    
     try {
-      if (confirmPassword == password) {
+      
         const { data } = await axios.post(`/api/signup`, {
           name,
           email,
@@ -49,20 +58,52 @@ function Signup() {
         });
         if (data?.success) {
           setTopLoading(100)
-          toast.success(data.message);
+          setLoginMode(true);
         } else {
+          setLoginMode(false);
           setTopLoading(100)
           toast.error(data.message);
         }
-      }
+      
     } catch (error) {
       console.log(error);
     }
   };
+const verifyEmail=()=>{
+    
+  if(otp==emailOTP){
+    forSignupAPI();    
+  }else{
+    toast.success("OTP is not Correct!")
+  }
+}
+const handleSignup=async()=>{
+  if(!name || !email || !password || !confirmPassword){
+    setValidateForm(true);    
+  }else if (confirmPassword != password) {
+    setValidateForm(false);
+    setConfirmPasswordErr(true);
+    setTimeout(() => {
+      setConfirmPasswordErr(false);
+    }, 3000);
+  }else{
+  const otp = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
+  setEmailOTP(otp);
+  try {
+    const { data } = await axios.post(`/api/verifyemail`, {email,otp});
+    if(data?.success){
+      setIsSignup(false)
+      setForgotPassword(false)
+      setEmailverify(true)
+    }
+  } catch (error) {
+    toast.error(error)
+  }
+  }
+}
 
   const handleLogin = async () => {
-    setTopLoading(40)
-    // alert(` ${email}${password} `)
+    setTopLoading(40)    
     try {
       const { data } = await axios.post(`/api/login`, {
         email,
@@ -80,9 +121,11 @@ function Signup() {
         router.push(location.state);
       }else{
         setTopLoading(100)
-        toast.error(data?.message);
+        setLoginErr(data?.message);
       }
-      
+      setTimeout(() => {
+        setLoginErr('');
+      }, 3000);
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +133,14 @@ function Signup() {
 
   // GET OTP FOR RESET PASSWORD
   const handleForgotPassword = async() => {
+    
     try {
+      if(email===''){
+        setEmailErr(true)
+        setTimeout(() => {
+          setEmailErr(false)
+        }, 3000);
+    }else{
         const { data } = await axios.post(`/api/otpforgetpassword/getotp`, { email});
         if (data?.success) {
           toast.success(data?.message)
@@ -101,6 +151,7 @@ function Signup() {
         }else{
           toast.error(data?.message)
         }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -122,6 +173,7 @@ function Signup() {
   }
   }
   const resetPassword = async() => {
+    
     try {
       const { data } = await axios.post(`/api/otpforgetpassword/resetpassword`, { email,password});
       if (data?.success) {
@@ -145,13 +197,16 @@ function Signup() {
             {isForgotPassword ? (
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Forgot Password</h2>
+                <label >Email</label>
+                {emailErr && <p className='text-red-500'>Email is Required</p>}
                 < input required
                   type="email"
-                  placeholder="Email"
-                  className="w-full px-4 py-2 rounded mb-4"
+                  placeholder="Enter your email"
+                  className="w-full border border-[f0f0f0] px-4 py-2 rounded mb-4  "
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                
                 <button
                   className="bg-red-500 text-white w-full py-2 rounded hover:bg-red-600"
                   onClick={handleForgotPassword}
@@ -170,35 +225,42 @@ function Signup() {
                 <h2 className="text-2xl font-semibold mb-4">
                   {isLoginMode ? "Login" : "Sign Up"}
                 </h2>
-                {!isLoginMode && (
+                {!isLoginMode && (<>
+                  {formValidate && <p className='text-red-500 text-center'>Fill All Required Fields</p>}
+                  <label >Name:</label>
                   < input required
                     type="text"
                     placeholder="Name"
-                    className="w-full px-4 py-2 rounded mb-4"
+                    className="w-full border border-[f0f0f0] px-4 py-2 rounded mb-4"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                  />
+                  /></>
                 )}
+                {loginErr && <p className='text-red-500 text-center text-2xl'>{loginErr}</p>}
+                <label >Email:</label>                
                 < input required
                   type="email"
                   placeholder="Email"
-                  className="w-full px-4 py-2 rounded mb-4"
+                  className="w-full border border-[f0f0f0] px-4 py-2 rounded mb-4"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                <label >Password:</label>
                 < input required
                   type="password"
                   placeholder="Password"
-                  className="w-full px-4 py-2 rounded mb-4"
+                  className="w-full border-[f0f0f0] border px-4 py-2 rounded mb-4"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 {!isLoginMode &&  (
                   <>
+                  <label >Confirm Password:</label>
+                  {confirmPasswordErr && <p className='text-red-500 '>Password does not match</p>}
                     < input required
                       type="password"
                       placeholder="Confirm Password"
-                      className="w-full px-4 py-2 rounded mb-4"
+                      className="w-full border-[f0f0f0] border px-4 py-2 rounded mb-4"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
@@ -248,7 +310,26 @@ function Signup() {
           </div>
         </div>
       )}
-
+      {emailverify && (
+              <div className="min-h-screen flex items-center justify-center bg-gray-100 rounded-lg">
+                <div className="bg-white p-8 rounded shadow-md w-full md:w-1/2 lg:w-1/3">
+                  <h2 className="text-2xl font-semibold mb-4">Enter OTP. Recived on Your Email</h2>
+                  < input required
+                    type="number"
+                    placeholder="OTP"
+                    className="w-full px-4 py-2 rounded mb-4 border"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                  />
+                  <button
+                    className="bg-red-500 text-white w-full py-2 rounded hover:bg-red-600"
+                    onClick={verifyEmail}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            )}
       {userOtp && isSignup &&(
         <div className="min-h-screen flex items-center justify-center bg-gray-100 rounded-lg">
           <div className="bg-white p-8 rounded shadow-md w-full md:w-1/2 lg:w-1/3">
