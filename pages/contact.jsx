@@ -32,6 +32,9 @@ const Contact = () => {
       if (formData[field].trim() === '' || formData[field].length < 5) {
         newErrors[field] = `${field} is required`;
         valid = false;
+      } else if (field === 'email' && !formData[field].includes('@')) {
+        newErrors[field] = `Enter a Valid Email!`;
+        valid = false;
       }
     }
 

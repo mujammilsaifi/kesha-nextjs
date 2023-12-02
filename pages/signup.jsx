@@ -8,9 +8,6 @@ import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const API = process.env.NEXT_PUBLIC_APP_API_URL;
-const EMAIL=process.env.NEXT_PUBLIC_EMAIL
-const PASSWORD=process.env.NEXT_PUBLIC_PASSWORD
 
 function Signup() {
     const[loading,setTopLoading] =useTopLoadingBar();

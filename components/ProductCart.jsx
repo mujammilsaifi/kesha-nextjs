@@ -17,9 +17,9 @@ const ProductCard = ({_id,name,slug,price,sprice,images}) => {
                 className="rounded-md h-[320px] w-[360px]"
             />
             <div className="text-black/[0.9] mt-2">
-                <h2 className="text-[16px] md:text-lg font-medium">{name.slice(0,64)}...</h2>
+                <h2 className="text-[13px] md:text-[16px] font-medium">{name.slice(0,64)}...</h2>
                 <div className="flex items-center text-black/[0.5]">
-                    <p className="mr-2 text-[16px] md:text-lg font-semibold">
+                MRP: <p className="mr-2 text-[16px] md:text-lg font-bold">
                         {/* &#8377;{p.price} */}                       
                         &#8377;{price-sprice !=price ? sprice : price}
                     </p>

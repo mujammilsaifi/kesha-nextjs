@@ -14,13 +14,13 @@ const data = [
 const Menu = ({ showCatMenu, setShowCatMenu,categories}) => {
    
     return (
-        <ul className='hidden md:flex items-center text-lg gap-8 font-semibold text-balck [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>
+        <ul className='hidden md:flex items-center lg:text-lg text-sm gap-4 lg:gap-8 font-semibold text-balck [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>
             {
                 data.map((elm) => {
                     return (
                         <React.Fragment key={elm.id}>
                             {!!elm?.subMenu ? (
-                                <li className='cursor-pointer text-lg flex items-center gap-2 relative'
+                                <li className='cursor-pointer lg:text-lg text-sm flex items-center gap-2 relative'
                                     onMouseEnter={() => setShowCatMenu(true)}
                                     onMouseLeave={() => setShowCatMenu(false)}
                                 >

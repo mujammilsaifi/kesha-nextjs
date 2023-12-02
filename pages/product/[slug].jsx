@@ -7,13 +7,15 @@ import { Carousel } from "react-responsive-carousel";
 import Carousels from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { IoMdHeartEmpty } from "react-icons/io";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,  } from "react";
 import axios from "axios";
 import mongoose from "mongoose"
 import Link from "next/link";
 import { useCart } from '@/context/Cart';
 import { toast } from 'react-toastify';
 import productModel from '@/Models/productModel';
+import { useTopLoadingBar } from '@/context/TopLoadingBar';
+import UserReviews from '@/components/UserReviews';
 
 export async function getServerSideProps({ query }) {
   const { slug } = query;  
@@ -44,7 +46,7 @@ const Product = ({ product }) => {
   const responsive = {
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
-        items: 3,
+        items: 4,
     },
     tablet: {
         breakpoint: { max: 1023, min: 464 },
@@ -73,13 +75,112 @@ const Product = ({ product }) => {
     }
   ]
   const [cart,setCart] =useCart();
+  const[loading,setTopLoading] =useTopLoadingBar();
   const router = useRouter();
   
   const [products, setRelatedProducs] = useState([]); //for related products
   const [productSec, setProductSec] = useState(1);
   const [psize, setSize] = useState(11);
-  
-  
+
+  //for reviews to handle
+  const [formData, setFormData] = useState({
+    name: '',
+    review: '',
+  });
+  const [errors, setErrors] = useState({});
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const validateForm = () => {
+   
+    let valid = true;
+    const newErrors = {};
+
+    // Check if fields are not empty and meet the required length
+    for (const field in formData) {
+      if (formData[field].trim() === '' || formData[field].length < 5) {
+        newErrors[field] = `${field} is required`;
+        valid = false;
+      } else if (field === 'review' && formData[field].length < 20) {
+        newErrors[field] = `write the revies more then 20 character`;
+        valid = false;
+      }
+    }    
+
+    setErrors(newErrors);
+    return valid;
+  };
+  const handleSubmitReview=async(e)=>{
+    e.preventDefault()
+    if(validateForm()){
+      try {
+          setTopLoading(40);
+          const { data } = await axios.post(`/api/addreview`, {formData});
+          if (data?.success) {
+              setTopLoading(100)
+              window.location.reload();
+          }
+           
+      } catch (error) {
+        setTopLoading(100)
+      }
+    }
+  }
+
+ //for reviews to handle
+ const [askformData, setAskFormData] = useState({
+  email: '',
+  subject: '',
+  message:''
+});
+
+const handleAskChange = (e) => {
+  const { name, value } = e.target;
+  setAskFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+const validateAskForm= () => {
+ 
+  let valid = true;
+  const newErrors = {};
+
+  // Check if fields are not empty and meet the required length
+  for (const field in askformData) {
+    if (askformData[field].trim() === '' || askformData[field].length < 5) {
+      newErrors[field] = `${field} is required`;
+      valid = false;
+    } else if (field === 'email' && !askformData[field].includes('@')) {
+      newErrors[field] = `Enter a Valid Email!`;
+      valid = false;
+    }
+  }    
+
+  setErrors(newErrors);
+  return valid;
+};
+const handleAskQuestion=async(e)=>{
+  e.preventDefault()
+  if(validateAskForm()){
+    try {
+        setTopLoading(40);
+        const { data } = await axios.post(`/api/addaskquestion`, {askformData});
+        if (data?.success) {
+            setTopLoading(100)
+            window.location.reload();
+        }
+         
+    } catch (error) {
+      setTopLoading(100)
+    }
+  }
+}
+
   const handleShow = (no) => {
     setProductSec(no)
   }
@@ -248,22 +349,9 @@ useEffect(() => {
           </p>
           </section>
           <section className={productSec === 1 ? 'Reviews flex flex-col md:flex-row items-center justify-around' : "hidden"}>
-          <section className='userReviews'>
-            <figure className="max-w-screen-md mx-auto text-center">
-              <svg className="w-10 h-10 mx-auto mb-3 text-black dark:text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
-                <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
-              </svg>
-              <blockquote>
-                <p className="text-2xl italic font-medium text-black dark:text-black">"Flowbite is just awesome. It contains tons of predesigned components and pages starting from login screen to complex dashboard. Perfect choice for your next SaaS application."</p>
-              </blockquote>
-              <figcaption className="flex items-center justify-center mt-6 space-x-3">
-                <img className="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png" alt="profile picture" />
-                <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
-                  <cite className="pr-3 font-medium text-black dark:text-black">Micheal Gough</cite>
-                  <cite className="pl-3 text-sm text-black dark:text-black">CEO at Google</cite>
-                </div>
-              </figcaption>
-            </figure>
+          <section className='userReviews md:w-1/2 w-[100%]' >
+           
+           <UserReviews/>
           </section>
           {/* reviwe form */}
 
@@ -271,16 +359,18 @@ useEffect(() => {
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white">
               <div className="flex-auto p-5 lg:p-10">
                 <h4 className="text-2xl mb-4 text-black font-semibold">Have a Review?</h4>
-                <form id="feedbackForm" action method>
+                <form id="feedbackForm" >
                   <div className="relative w-full mb-3">
-                    <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="email">Email</label><input type="email" name="email" id="email" className="border-0 px-3 py-3 rounded text-sm shadow w-full
-              bg-gray-300 placeholder-black text-gray-800 outline-none focus:bg-gray-400" placeholder=" " style={{ transition: 'all 0.15s ease 0s' }} required />
+                    <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="email">Name</label><input type="text" name="name" id="email" className="border-0 px-3 py-3 rounded text-sm shadow w-full
+              bg-gray-300 placeholder-black text-gray-800 outline-none focus:bg-gray-400" placeholder="Enter your name" style={{ transition: 'all 0.15s ease 0s' }} value={formData.name} onChange={handleChange}/>
+              {errors.name && <p className='text-red-500'>{errors.name}</p>}
                   </div>
                   <div className="relative w-full mb-3">
-                    <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="message">Review</label><textarea maxLength={300} name="feedback" id="feedback" rows={4} cols={80} className="border-0 px-3 py-3 bg-gray-300 placeholder-black text-gray-800 rounded text-sm shadow focus:outline-none w-full" placeholder required defaultValue={""} />
+                    <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="feedback">Review</label><textarea maxLength={300} name="review" id="feedback" rows={4} cols={80} className="border-0 px-3 py-3 bg-gray-300 placeholder-black text-gray-800 rounded text-sm shadow focus:outline-none w-full" placeholder='Enter your review' value={formData.review} onChange={handleChange}  />
+                    {errors.review && <p className='text-red-500'>{errors.review}</p>}
                   </div>
                   <div className="text-center mt-6">
-                    <button id="feedbackBtn" className="bg-black text-white text-center mx-auto active:bg-yellow-400 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="submit" style={{ transition: 'all 0.15s ease 0s' }}>Submit
+                    <button id="feedbackBtn" className="bg-black text-white text-center mx-auto active:bg-yellow-400 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" onClick={handleSubmitReview} style={{ transition: 'all 0.15s ease 0s' }}>Submit
                     </button>
                   </div>
                 </form>
@@ -390,40 +480,42 @@ useEffect(() => {
           </div>
 
           <span>
-            customer@kesha.com
+          keshajewels@gmail.com
           </span>
         </section>
 
         <section className={productSec === 4 ? 'Question flex items-center justify-center' : "hidden"}>
-          <form action="#" className="space-y-8 w-[60%] my-10">
+          <form  className="space-y-8 w-[60%] my-10">
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-black dark:text-black">Your email</label>
-              <input type="email" id="email" className="shadow-sm bg-white border border-white text-black text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-black dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required />
+              <input type="email" name='email' id="email" className="shadow-sm bg-white border border-white text-black text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-black dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@flowbite.com" onChange={handleAskChange} value={askformData.email}/>
+              {errors.email && <p className='text-red-500'>{errors.email}</p>}
             </div>
             <div>
               <label htmlFor="subject" className="block mb-2 text-sm font-medium text-black dark:text-black">Subject</label>
-              <input type="email" id="subject" className="shadow-sm bg-white border border-white text-black text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-black dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Let us know how we can help you" required />
+              <input type="text" name='subject' id="subject" className="shadow-sm bg-white border border-white text-black text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-white dark:border-black dark:placeholder-black dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Let us know how we can help you" onChange={handleAskChange} value={askformData.subject}/>
+              {errors.subject && <p className='text-red-500'>{errors.subject}</p>}
             </div>
             <div className="sm:col-span-2">
               <label htmlFor="message" className="block mb-2 text-sm font-medium text-black dark:text-black">Your message</label>
-              <textarea id="message" rows={6} className="block p-2.5 w-full text-sm text-black bg-white rounded-lg shadow-sm border border-gray-300  dark:bg-white dark:border-black dark:placeholder-black dark:text-black" placeholder="Leave a comment..." defaultValue={""} />
+              <textarea name='message' id="message" rows={6} className="block p-2.5 w-full text-sm text-black bg-white rounded-lg shadow-sm border border-gray-300  dark:bg-white dark:border-black dark:placeholder-black dark:text-black" placeholder="Leave a comment..." onChange={handleAskChange} value={askformData.message} />
+              {errors.message && <p className='text-red-500'>{errors.message}</p>}
             </div>
-            <button type="submit" className="py-3 px-3 text-sm font-medium text-center text-white rounded-lg bg-black sm:w-fit focus:ring-4 focus:outline-none ">Send message</button>
+            <button type="submit" className="py-3 px-3 text-sm font-medium text-center text-white rounded-lg bg-black sm:w-fit focus:ring-4 focus:outline-none" onClick={handleAskQuestion}>Send message</button>
           </form>
         </section>
         
-        <div className="mt-[50px] md:mt-[100px] mb-[100px] md:mb-0">
+        <div className="mt-[10px] md:mt-[10px] mb-[100px] md:mb-0">
             <div className="text-2xl font-bold mb-5">You Might Also Like</div>
             <Carousels
-                responsive={responsive}
-                containerclassName="mx-[10px]"
-                itemclassName="px-[10px]"
+                responsive={responsive} infinite={true} infiniteLoop={true} autoPlay={true} autoPlaySpeed={3000}
+                
             >
                
                { products?.map((product, index) => (
                     <Link key={index}
                     href={`/product/${product?.slug}`}
-                    className=" transform overflow-hidden bg-white duration-200 rounded-md hover:scale-105 cursor-pointer px-4"
+                    className=" transform overflow-hidden bg-white duration-200 rounded-md hover:scale-105 cursor-pointer px-4 m-3"
                 >
                     <img
                         width={500}
@@ -435,7 +527,7 @@ useEffect(() => {
                     <div className="text-black/[0.9]  md:w-[360px] w-[360px]">
                         <h2 className="text-[16px] mt-2 md:text-lg font-medium">{product?.name.slice(0,65)}...</h2>
                         <div className="flex items-center text-black/[0.5]">
-                            <p className="mr-1 text-[16px] md:text-lg font-semibold">
+                           MRP: <p className="mr-1 text-[16px] md:text-lg font-bold">
                                 {/* &#8377;{p.price} */}
                                
                                 &#8377;{product?.price-product?.sprice !=product?.price ? product?.sprice : product?.price}

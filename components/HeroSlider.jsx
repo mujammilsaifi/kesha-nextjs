@@ -1,12 +1,27 @@
 import React,{useState,useEffect} from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-import { BiArrowBack } from "react-icons/bi";
 import axios from "axios";
-import { toast } from "react-toastify";
-const API=process.env.NEXT_PUBLIC_APP_API_URL
-
+const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
 const HeroSlider = () => {
     const [slides, setSlide]= useState([]); //for all slides
    
@@ -28,30 +43,9 @@ const HeroSlider = () => {
         getAllSlide();
     }, [])
     return (
-        // className={`px-5 py-5`}
-        <div className="relative text-white text-[20px] w-full mx-auto md:mt-[125px] mt-[90px]">
-            <Carousel
-                autoPlay={true}
-                infiniteLoop={true}
-                showThumbs={false}
-                showStatus={false}
-                renderArrowPrev={(clickHandler, hasPrev) => (
-                    <div
-                        onClick={clickHandler}
-                        className="absolute right-[30px] md:right-[51px] bottom-0 w-[30px] md:w-[50px] h-[30px] md:h-[50px] bg-black z-10 flex items-center justify-center cursor-pointer border-1 border-white-500/100 hover:opacity-90"
-                    >
-                        <BiArrowBack className="text-sm md:text-lg" />
-                    </div>
-                )}
-                renderArrowNext={(clickHandler, hasNext) => (
-                    <div
-                        onClick={clickHandler}
-                        className="absolute right-0 bottom-0 w-[30px] md:w-[50px] h-[30px] md:h-[50px] bg-black z-10 flex items-center justify-center cursor-pointer border-1 border-white-500/100 hover:opacity-90"
-                    >
-                        <BiArrowBack className="rotate-180 text-sm md:text-lg" />
-                    </div>
-                )}
-            >
+        
+        <div className="relative text-white text-[20px] w-full mx-auto md:mt-[130px] mt-[100px]">
+            <Carousel responsive={responsive} infinite={true} infiniteLoop={true} autoPlay={true} autoPlaySpeed={3000}>
                 {slides.map((slide, i) => {
                     
                     return (

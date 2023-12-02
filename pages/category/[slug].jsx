@@ -35,16 +35,16 @@ const Category = ({catProducts}) => {
   const router=useRouter()
   const {slug}=router.query;
   return (
-    <section className='mt-[120px]'>
+    <section className='mt-[140px]'>
       <Wrapper>
-        <div className="text-center max-w-[800px] mx-auto mt-8 md:mt-10">
-          <div className="text-[28px] uppercase  md:text-[34px] mb-5 font-semibold leading-tight">
+        <div className="text-center max-w-[800px] mx-auto mt-2 md:mt-1">
+          <div className="text-[28px] uppercase  md:text-[34px] mb-2 font-semibold leading-tight">
             {slug}
           </div>
         </div>
 
         {/* products grid start */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-14 px-0 md:px-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-8 px-0 md:px-0">
         {catProducts?.map((product, i) => (
           <ProductCard key={i} {...product} />
           ))}

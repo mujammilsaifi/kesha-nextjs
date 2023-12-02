@@ -158,8 +158,8 @@ const Footer = () => {
             </Wrapper>
             <hr className="decoration-white" />
             <div className="flex flex-col md:flex-row justify-around items-center gap-2 pt-5">
-                <span className="text-white text-center">© 2023 kesha.com. All rights reserved || Design & Developed by <a href='https://digitalwhopper.com/'>Digital Whopper</a></span>
-                <img src="/payment.webp" alt="" className="md:w-[520px]" />
+                <span className="text-white text-center">© 2023 keshajewels.com. All rights reserved || Design & Developed by <a href='https://digitalwhopper.com/'>Digital Whopper</a></span>
+                <img src="/images__1_-removebg-preview.webp"  alt="payment" className="md:w-[520px] bg-white" />
             </div>
         </footer>
     )
