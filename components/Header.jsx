@@ -101,7 +101,7 @@ const Header = () => {
           />
       <header
         // backdrop-filter backdrop-blur-lg bg-opacity-30
-        className={`w-full h-[100px] md:h-[140px] top-0 px-10 bg-white flex items-center justify-between z-20 fixed   transition-transform duration-300 drop-shadow-sm ${show}`}
+        className={`w-full h-[100px] md:h-[140px] top-0 px-10 bg-white flex items-center justify-between fixed   transition-transform duration-300  drop-shadow-sm ${show}`} style={{zIndex: "9999"}}
       >
         <div className="h-[80%]">
           <Link href="/">

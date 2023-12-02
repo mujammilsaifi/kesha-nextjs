@@ -18,7 +18,7 @@ const MobileMenu = ({
     setMobileMenu,categories
 }) => {
     return (
-        <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black z-999">
+        <ul className="flex flex-col md:hidden font-bold absolute top-[50px] z-99999 left-0 w-full h-[calc(100vh-50px)] bg-white border-t text-black ">
             {data.map((item) => {
                 return (
                     <React.Fragment key={item.id}>
