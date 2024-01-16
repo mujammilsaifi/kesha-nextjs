@@ -32,7 +32,7 @@ const handler=async(req,res)=>{
         [fields, files] = await form.parse(req);
         const  name  = fields?.name?.[0];
         const { image } = files;
-        const filepath = image[0].filepath; 
+        const filepath = image[0]?.filepath; 
         const exisitingSlide= await slider1Model.findOne({_id:slideid});
         const public_id=exisitingSlide?.publicid
         if(filepath){

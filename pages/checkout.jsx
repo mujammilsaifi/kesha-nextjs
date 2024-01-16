@@ -7,9 +7,8 @@ const API = process.env.NEXT_PUBLIC_APP_API_URL;
 import crypto from "crypto";
 import { useCart } from "@/context/Cart";
 import { toast } from "react-toastify";
-import Wrapper from "@/components/wrapper";
-const merchantId = "PGTESTPAYUAT";
-const saltKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
+const merchantId = "M1TUYKOET45D";
+const saltKey = "98ee057e-e30f-4017-903f-3ef3864aca34";
 const saltIndex = 1;
 const indianStates = [
   'Andhra Pradesh',
@@ -55,26 +54,35 @@ const Checkout = () => {
       router.push("/");
     }
   }, []);
+  const generateUniqueTransactionId = () => {
+    const timestamp = new Date().getTime();
+    return `MT${timestamp}`;
+  };
+  
+  const generateUniqueUserId = () => {
+    const timestamp = new Date().getTime();
+    return `MUID${timestamp}`;
+  };
   const [errors, setErrors] = useState({});
   const router = useRouter();
   const [totalPayment] = useTotalPayment();
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const _id = auth?.user?._id;
-  const [selectedGateway, setSelectedGateway] = useState("");
-  const [merchantTransactionId, setMerchantTransactionId] =
-    useState("MT7850590068188104");
-  const [merchantUserId, setMerchantUserId] = useState("MUID123");
-  const [redirectUrl] = useState("http://localhost:3000/checkout");
+  const [selectedGateway, setSelectedGateway] = useState("phonePe");
+  const [merchantTransactionId, setMerchantTransactionId] = useState(generateUniqueTransactionId());
+  const [merchantUserId, setMerchantUserId] = useState(generateUniqueUserId());
+  const [redirectUrl] = useState("https://keshajewels.com/userprofile");
   const [redirectMode] = useState("REDIRECT");
-  const [callbackUrl] = useState("http://localhost:3000/paymentSuccess");
+  const [callbackUrl] = useState("https://keshajewels.com/paymentSuccess");
 
+  
   const initiatePayment = async () => {
     const payload = {
       merchantId,
       merchantTransactionId,
       merchantUserId,
-      amount: totalPayment * 100,
+      amount: 1 * 100,
       redirectUrl,
       redirectMode,
       callbackUrl,
@@ -82,22 +90,16 @@ const Checkout = () => {
         type: "PAY_PAGE",
       },
     };
+
     // Convert the payload to a Base64 encoded string
     const base64Payload = Buffer.from(JSON.stringify(payload)).toString(
       "base64"
     );
 
     // Calculate the X-VERIFY header
-    const checksum =
-      crypto
-        .createHash("sha256")
-        .update(base64Payload + "/pg/v1/pay" + saltKey)
-        .digest("hex") +
-      "###" +
-      saltIndex;
-
+    const checksum =crypto.createHash("sha256").update(base64Payload + "/pg/v1/pay" + saltKey).digest("hex") +"###" +saltIndex;
     try {
-      const response = await fetch(`${API}/api/payment/initiatepayment`, {
+      const response = await fetch(`/api/payment/initiatepayment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,8 +145,10 @@ const Checkout = () => {
 
   // Function to execute when PhonePe is selected
   const handlePhonePe = () => {
+    if(true){
     initiatePayment();
-    checkPayment();
+    // checkPayment();
+    }
   };
 
   const handleFormChange = (e) => {
@@ -438,12 +442,10 @@ const Checkout = () => {
                   type="radio"
                   id="cashOnDelivery"
                   name="paymentGateway"
-                  value="CashOnDelivery"
-                  checked={true}
-                  // checked={selectedGateway === "CashOnDelivery"}
+                  value="cashOnDelivery"
+                  checked={selectedGateway === "cashOnDelivery"}
                   onChange={handleGatewaySelection}
-                  className="mr-2 form-radio h-5 w-5 text-blue-600"
-                  
+                  className="mr-2 form-radio h-5 w-5 text-blue-600"                  
                 />
                 <label
                   htmlFor="cashOnDelivery"
@@ -454,11 +456,10 @@ const Checkout = () => {
               </div>
               <div className="mb-4">
                 <input
-                  disabled
                   type="radio"
                   id="phonePe"
                   name="paymentGateway"
-                  value="PhonePe"
+                  value="phonePe"
                   checked={selectedGateway === "phonePe"}
                   onChange={handleGatewaySelection}
                   className="mr-2 form-radio h-5 w-5 text-blue-600"
@@ -473,7 +474,7 @@ const Checkout = () => {
               <div></div>
             </div>
             <div className="mb-4">
-              <button onClick={ () => selectedGateway === 'CashOnDelivery' ? handlePhonePe() :handleCashOnDelivery() }
+              <button onClick={ () => selectedGateway === 'cashOnDelivery' ? handleCashOnDelivery() : handlePhonePe()  }
           className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full">
                 Continue To Payment
               </button>

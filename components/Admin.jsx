@@ -282,7 +282,7 @@ const getAllProduct = async () => {
                 formDataToSend.append(key, catData[key]);
               }
             }
-          const {data}=await axios.put(`/api/updatecategory/${categoryid}`,{headers:{Authorization:token }});
+          const {data}=await axios.put(`/api/updatecategory/${categoryid}`,formDataToSend,{headers:{Authorization:token }});
           
           if (data?.success) {
             toast.success('Category updated successfully');
