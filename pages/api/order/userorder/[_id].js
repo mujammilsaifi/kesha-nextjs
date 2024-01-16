@@ -10,4 +10,4 @@ const handler=async(req,res)=>{
     const orders=await orderModel.find({buyer:_id})
     res.json({success:true,orders});          
 }
-export default connectDB(handler)
+export default connectDB(handler) 

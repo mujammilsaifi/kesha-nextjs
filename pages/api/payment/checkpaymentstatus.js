@@ -21,8 +21,7 @@ const handler=async(req,res)=>{
                 'X-VERIFY': checkSum,
                 'X-MERCHANT-ID': merchantId
               }
-            };
-            
+            };            
             const response = await axios.request(options);
             res.status(200).json(response.data);
           } catch (error) {

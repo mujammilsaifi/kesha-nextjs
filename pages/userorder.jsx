@@ -21,7 +21,11 @@ const UserOrder = () => {
     }, [])
     const getOrder=async()=>{
       try {
-        const {data}=await axios.get(`/api/order/userorder/${_id}`);
+        const { data } = await axios.get(`/api/order/userorder/${_id}`, {
+          headers: {
+            Authorization: auth?.token,
+          },
+        });
         if(data?.success)
           setOrder(data?.orders);
       } catch (error) {

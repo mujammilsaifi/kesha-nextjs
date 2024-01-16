@@ -3,7 +3,6 @@ import { useTotalPayment } from "@/context/TotalPayment";
 import { useRouter } from "next/router";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-const API = process.env.NEXT_PUBLIC_APP_API_URL;
 import crypto from "crypto";
 import { useCart } from "@/context/Cart";
 import { toast } from "react-toastify";
@@ -72,12 +71,13 @@ const Checkout = () => {
   const [selectedGateway, setSelectedGateway] = useState("phonePe");
   const [merchantTransactionId, setMerchantTransactionId] = useState(generateUniqueTransactionId());
   const [merchantUserId, setMerchantUserId] = useState(generateUniqueUserId());
-  const [redirectUrl] = useState("https://keshajewels.com/userprofile");
+  const [redirectUrl] = useState("https://keshajewels.com/callback");
   const [redirectMode] = useState("REDIRECT");
-  const [callbackUrl] = useState("https://keshajewels.com/paymentSuccess");
+  const [callbackUrl] = useState("https://keshajewels.com/callback");
 
   
   const initiatePayment = async () => {
+    localStorage.setItem("mid",merchantTransactionId)
     const payload = {
       merchantId,
       merchantTransactionId,
@@ -110,8 +110,6 @@ const Checkout = () => {
 
       if (response.ok) {
         const result = await response.json();
-        // Redirect the user to the PhonePe payment page
-        alert(result.data.merchantTransactionId)
         window.location.href = result.data.instrumentResponse.redirectInfo.url;
       } else {
         toast.error(response?.data?.message);
@@ -121,34 +119,12 @@ const Checkout = () => {
     }
   };
 
-  const checkPayment = async () => {
-    try {
-      const response = await fetch(`/api/payment/checkpaymentstatus`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Set the content type to JSON
-        },
-        body: JSON.stringify({ merchantId, merchantTransactionId }), // Convert object to JSON string
-      });
-      if (response.ok) {
-        const result = await response.json();
-        if (result?.success) {
-          orderPlace(result);
-          router.push("/paymentSuccess");
-        } else {
-          router.push("/paymentFaild");
-        }
-      }
-    } catch (error) {
-      console.error("ErrorCheck Payment:", error);
-    }
-  };
+  
 
   // Function to execute when PhonePe is selected
   const handlePhonePe = () => {
     if(validateForm()){
     initiatePayment();
-    checkPayment();
     }
   };
 
@@ -240,7 +216,6 @@ const Checkout = () => {
           {/* Billing Information */}
           <div className="md:w-2/3 w-[100%] p-2 md:p-4 bg-white rounded-lg shadow-md mt-3">
             <h1 className="text-2xl font-semibold mb-4">Billing Information</h1>
-
             <div className="flex flex-wrap -mx-2">
               <div className="w-1/2 px-2 mb-4">
                 <label
