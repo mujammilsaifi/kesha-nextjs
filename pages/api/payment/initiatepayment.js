@@ -11,7 +11,7 @@ const handler=async(req,res)=>{
                 .createHash('sha256')
                 .update(base64Payload + "/pg/v1/pay" + saltKey)
                 .digest('hex') + '###' + saltIndex;
-            try {     
+            try {   
                                    
                 const options = {
                   method: 'POST',

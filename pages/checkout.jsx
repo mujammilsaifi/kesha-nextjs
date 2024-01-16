@@ -111,6 +111,7 @@ const Checkout = () => {
       if (response.ok) {
         const result = await response.json();
         // Redirect the user to the PhonePe payment page
+        alert(result.data.merchantTransactionId)
         window.location.href = result.data.instrumentResponse.redirectInfo.url;
       } else {
         toast.error(response?.data?.message);
@@ -145,9 +146,9 @@ const Checkout = () => {
 
   // Function to execute when PhonePe is selected
   const handlePhonePe = () => {
-    if(true){
+    if(validateForm()){
     initiatePayment();
-    // checkPayment();
+    checkPayment();
     }
   };
 
